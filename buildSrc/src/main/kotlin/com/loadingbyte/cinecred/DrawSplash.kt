@@ -29,7 +29,7 @@ abstract class DrawSplash : DefaultTask() {
 
     @TaskAction
     fun run() {
-        val title = "Cinecred"
+        val title = "CredGen"
         val logoSize = 128
         val logoTitleGap = 30
         val titleVersionGap = 15

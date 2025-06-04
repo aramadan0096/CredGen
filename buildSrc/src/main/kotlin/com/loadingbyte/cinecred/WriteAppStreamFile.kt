@@ -47,7 +47,7 @@ abstract class WriteAppStreamFile : DefaultTask() {
 
         comp.appendChild(doc.createElement("id", "com.cinecred.cinecred"))
         comp.appendChild(doc.createElement("metadata_license", "CC0-1.0"))
-        comp.appendChild(doc.createElement("name", "Cinecred"))
+        comp.appendChild(doc.createElement("name", "CredGen"))
         for ((locale, slogan) in slogans.get().entries)
             comp.appendChild(makeLocalized(doc, "summary", locale, slogan))
         comp.appendChild(doc.createElement("description").also { desc ->

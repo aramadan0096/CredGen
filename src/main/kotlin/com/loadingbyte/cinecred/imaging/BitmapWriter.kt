@@ -568,7 +568,7 @@ interface BitmapWriter {
             buf.putInt(16, HEADER_SIZE + dataBytes)  // file size
             buf.putInt(20, 1)  // new image
             buf.putInt(24, HEADER_SIZE)  // generic header size
-            buf.put(160, "Cinecred $VERSION".toByteArray())  // creator
+            buf.put(160, "CredGen $VERSION".toByteArray())  // creator
             buf.putInt(660, -1)  // unencrypted
 
             /* Image information header */
@@ -854,7 +854,7 @@ interface BitmapWriter {
                 buf.putInt(fps.denominator)
             }
 
-            val writer = "Cinecred $VERSION".toByteArray()
+            val writer = "CredGen $VERSION".toByteArray()
             buf.put("writer\u0000string\u0000".toByteArray())
             buf.putInt(writer.size)
             buf.put(writer)

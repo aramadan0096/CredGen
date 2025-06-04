@@ -11,7 +11,7 @@ import javax.swing.JDialog
 
 
 class PlaybackDialog(ctrl: ProjectController, private val playbackCtrl: PlaybackCtrlComms) :
-    JDialog(ctrl.projectFrame, "${ctrl.projectName} \u2013 ${l10n("ui.video.title")} \u2013 Cinecred") {
+    JDialog(ctrl.projectFrame, "${ctrl.projectName} \u2013 ${l10n("ui.video.title")} \u2013 CredGen") {
 
     val panel = PlaybackPanel(playbackCtrl, this)
 

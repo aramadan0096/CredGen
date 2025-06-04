@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=Cinecred
+Name=CredGen
 @LINUX_SHORTCUT_COMMENTS@
 Exec=cinecred %f
 Icon=cinecred

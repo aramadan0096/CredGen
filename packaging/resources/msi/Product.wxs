@@ -9,10 +9,10 @@
     <!-- Installed files -->
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFiles64Folder">
-        <Directory Id="INSTALLDIR" Name="Cinecred"/>
+        <Directory Id="INSTALLDIR" Name="CredGen"/>
       </Directory>
     </Directory>
-    <Feature Id="DefaultFeature" Title="Cinecred" Level="1">
+    <Feature Id="DefaultFeature" Title="CredGen" Level="1">
       <ComponentGroupRef Id="Shortcuts"/>
       <ComponentGroupRef Id="Files"/>
     </Feature>

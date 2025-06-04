@@ -1,4 +1,4 @@
-Cinecred
+CredGen
 ========
 
 Create beautiful film credits without the pain.
@@ -6,7 +6,7 @@ Create beautiful film credits without the pain.
 Visit https://cinecred.com for further information about the nature of this
 software, as well as manifold download options.
 
-Cinecred is licensed under the GNU General Public License Version 3, or any
+CredGen is licensed under the GNU General Public License Version 3, or any
 later version. For details, refer to the [license](LICENSE) file.
 
 For information on how to compile, run, and maintain this software, refer to the
@@ -19,9 +19,9 @@ Weblate! Here's how things currently stand:
 ![Translation status](https://hosted.weblate.org/widgets/cinecred/-/multi-auto.svg)
 
 
-## How to Build Cinecred
+## How to Build CredGen
 ### Prerequisites
-- JDK 21 : Required for building and running Cinecred. Gradle's toolchain enforces this, but you must install JDK 21 manually (automatic download is disabled).
+- JDK 21 : Required for building and running CredGen. Gradle's toolchain enforces this, but you must install JDK 21 manually (automatic download is disabled).
 - Gradle : Use the included gradlew / gradlew.bat scripts for consistent builds.
 - Platform-specific tools for native libraries:
   - Windows : Visual Studio Build Tools (MSVC and Clang, both selected in the installer)

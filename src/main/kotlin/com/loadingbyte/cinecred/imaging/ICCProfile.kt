@@ -431,7 +431,7 @@ class ICCProfile private constructor(
 
             // Prepare the description and copyright tags.
             tags += listOf("desc") to constructTextTag(colorSpace.toString())
-            tags += listOf("cprt") to constructTextTag("Cinecred $VERSION")
+            tags += listOf("cprt") to constructTextTag("CredGen $VERSION")
 
             // Prepare the primaries tags.
             val m = colorSpace.primaries.toXYZD50.values

@@ -1,14 +1,14 @@
 Maintenance
 ===========
 
-This documentation is relevant only to the maintainers of Cinecred and those who
+This documentation is relevant only to the maintainers of CredGen and those who
 wish to contribute to its development.
 
 
 Running
 -------
 
-Cinecred requires JDK 21. Gradle's toolchain mechanism enforces that version,
+CredGen requires JDK 21. Gradle's toolchain mechanism enforces that version,
 but automatic JDK downloading is disabled.
 
 Depending on your platform, use the command `gradle runOnWindows`,
@@ -44,7 +44,7 @@ to the various distribution channels.
 Compiling Native Libraries
 --------------------------
 
-Cinecred depends on quite a lot of native libraries. Some of these automatically
+CredGen depends on quite a lot of native libraries. Some of these automatically
 come with JAR dependencies, but others need to be rebuilt manually for each
 update, which means:
 

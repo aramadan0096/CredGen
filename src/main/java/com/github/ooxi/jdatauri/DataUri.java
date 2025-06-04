@@ -20,7 +20,7 @@
  *
  *  3. This notice may not be removed or altered from any source distribution.
  *
- * This file has been modified by the Cinecred project to use the JDK's Base64
+ * This file has been modified by the CredGen project to use the JDK's Base64
  * implementation in place of commons-codec.
  */
 package com.github.ooxi.jdatauri;

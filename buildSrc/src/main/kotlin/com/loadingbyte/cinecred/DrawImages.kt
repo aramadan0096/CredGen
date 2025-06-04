@@ -59,7 +59,7 @@ abstract class DrawImages : DefaultTask() {
                     g2.fillRect(165, 0, 493, 312)
                     g2.drawImage(logo.rasterize(100), 32, 28, null)
                     g2.font = semiFont.deriveFont(32f)
-                    g2.drawCenteredString("Cinecred", 0, 176, 165)
+                    g2.drawCenteredString("CredGen", 0, 176, 165)
                     g2.font = boldFont.deriveFont(20f)
                     g2.drawCenteredString(version, 0, 204, 165)
                 }
@@ -73,7 +73,7 @@ abstract class DrawImages : DefaultTask() {
                         g2.drawImage(logo.rasterize(80), 51, 0, null)
                         g2.color = textColor
                         g2.font = semiFont.deriveFont(24f)
-                        g2.drawCenteredString("Cinecred", 0, 110, 182)
+                        g2.drawCenteredString("CredGen", 0, 110, 182)
                         g2.font = boldFont.deriveFont(16f)
                         g2.drawCenteredString(version, 0, 130, 182)
                     }

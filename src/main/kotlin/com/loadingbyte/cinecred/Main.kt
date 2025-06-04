@@ -50,7 +50,7 @@ private val hasCrashed = AtomicBoolean()
 
 
 fun main(args: Array<String>) {
-    // Cinecred is a singleton application. When the application is launched a second time, we just simulate
+    // CredGen is a singleton application. When the application is launched a second time, we just simulate
     // a second application instance in the same VM.
     if (Singleton.invoke(SINGLETON_APP_ID, args))
         return
@@ -112,7 +112,7 @@ private fun mainSwing(args: Array<String>) {
     // displayed as the application name on, e.g., the Gnome Desktop. We fix this by setting WM_CLASS to the app name.
     // Notice that we could also set it to "cinecred" (in lower case) as Gnome would then find the matching
     // cinecred.desktop file and extract the app name from there, but directly setting the app name seems more portable.
-    trySetAWTAppClassNameLinux("Cinecred")
+    trySetAWTAppClassNameLinux("CredGen")
 
     // Tooltips should not disappear on their own after some time.
     // To achieve this, we set the dismiss delay to one hour.
@@ -248,7 +248,7 @@ private object UncaughtHandler : Thread.UncaughtExceptionHandler {
         val maxMem = rt.maxMemory()
         val mb = 1024 * 1024
         return """---- SYSTEM INFO ----
-Cinecred: $VERSION
+CredGen: $VERSION
 JVM: ${System.getProperty("java.vm.vendor")} ${System.getProperty("java.vm.name")} ${System.getProperty("java.vm.version")}
 OS: ${System.getProperty("os.name")} ${System.getProperty("os.arch")} ${System.getProperty("os.version")}
 Memory: Used ${(totalMem - freeMem) / mb} MB, Reserved ${totalMem / mb} MB, Max ${maxMem / mb} MB
@@ -283,7 +283,7 @@ Locale: ${Locale.getDefault().toLanguageTag()}
 
         if (send) {
             val address = encodeMailURIComponent("crashes@cinecred.com")
-            val subject = encodeMailURIComponent("Cinecred Crash Report")
+            val subject = encodeMailURIComponent("CredGen Crash Report")
             val report = "[If possible, please describe what you did leading up to this crash.]\n\n\n$header" +
                     // We replace tabs by four dots because some email programs trim leading tabs and spaces.
                     log.replace("\t", "....")

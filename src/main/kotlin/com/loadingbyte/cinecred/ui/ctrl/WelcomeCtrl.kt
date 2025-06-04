@@ -227,7 +227,7 @@ class WelcomeCtrl(private val masterCtrl: MasterCtrlComms) : WelcomeCtrlComms {
         else if (CHECK_FOR_UPDATES_PREFERENCE.get()) {
             val client = HttpClient.newBuilder().followRedirects(HttpClient.Redirect.ALWAYS).build()
             val req = HttpRequest.newBuilder(URI.create("https://cinecred.com/dl/api/v1/components"))
-                .setHeader("User-Agent", "Cinecred/$VERSION").build()
+                .setHeader("User-Agent", "CredGen/$VERSION").build()
             client.sendAsync(req, HttpResponse.BodyHandlers.ofString()).thenAccept { resp ->
                 if (resp.statusCode() != 200)
                     return@thenAccept
@@ -711,7 +711,7 @@ class WelcomeCtrl(private val masterCtrl: MasterCtrlComms) : WelcomeCtrlComms {
                 <html>
                     <body style="text-align: center">
                         <p style="margin-top: 0">
-                            Cinecred $VERSION: ${l10n("slogan")}<br>
+                            CredGen $VERSION: ${l10n("slogan")}<br>
                             <i>$COPYRIGHT</i>
                         </p>
                         <p>

@@ -8,7 +8,7 @@ import java.awt.event.WindowEvent
 import javax.swing.JFrame
 
 
-class ProjectFrame(ctrl: ProjectController) : JFrame("${ctrl.projectName} \u2013 Cinecred") {
+class ProjectFrame(ctrl: ProjectController) : JFrame("${ctrl.projectName} \u2013 CredGen") {
 
     val panel = EditPanel(ctrl)
 

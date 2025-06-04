@@ -66,9 +66,9 @@ class VideoWriter(
             .ffmpegThrowIfErrnum("Could not deduce output muxer from file extension")
         // Will be freed by avformat_free_context().
         oc.metadata(AVDictionary(null).also { metaDict ->
-            av_dict_set(metaDict, "encoding_tool", "Cinecred $VERSION", 0)
-            av_dict_set(metaDict, "company_name", "Cinecred", 0)
-            av_dict_set(metaDict, "product_name", "Cinecred $VERSION", 0)
+            av_dict_set(metaDict, "encoding_tool", "CredGen $VERSION", 0)
+            av_dict_set(metaDict, "company_name", "CredGen", 0)
+            av_dict_set(metaDict, "product_name", "CredGen $VERSION", 0)
         })
 
         // Find the codec.

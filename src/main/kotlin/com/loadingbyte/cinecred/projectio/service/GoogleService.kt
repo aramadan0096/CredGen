@@ -64,7 +64,7 @@ object GoogleService : Service {
             if (_credDataStore == null && _credDataStoreErr == null)
                 try {
                     _credDataStore = StoredCredential.getDefaultDataStore(FileDataStoreFactory(credDir.toFile()))
-                } catch (e: Exception /* Catch more than just IOException to ensure Cinecred can always launch. */) {
+                } catch (e: Exception /* Catch more than just IOException to ensure CredGen can always launch. */) {
                     LOGGER.error("Cannot access the Google credential store at '{}'.", credDir, e)
                     _credDataStoreErr = e.toString()
                 }
@@ -79,7 +79,7 @@ object GoogleService : Service {
         if (credDir.notExists()) persistentListOf() else try {
             credentialDataStore.keySet().sorted().map(::GoogleAccount).toPersistentList()
         } catch (_: IOException) {
-            // Don't throw now as that would inhibit Cinecred's launch. And even though keySet() claims to throw, it
+            // Don't throw now as that would inhibit CredGen's launch. And even though keySet() claims to throw, it
             // in fact does not, so any exception would already have been logged by the credentialDataStore getter.
             persistentListOf()
         }
@@ -324,7 +324,7 @@ object GoogleService : Service {
                 }
 
             val sheets = Sheets.Builder(transport, jsonFactory, credential)
-                .setApplicationName("Cinecred")
+                .setApplicationName("CredGen")
                 .build()
             cachedSheets = sheets
             return sheets

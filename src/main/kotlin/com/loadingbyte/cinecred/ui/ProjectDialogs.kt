@@ -15,7 +15,7 @@ enum class ProjectDialogType { STYLING, VIDEO, DELIVERY }
 
 private fun JDialog.setupProjectDialog(ctrl: ProjectController, type: ProjectDialogType) {
     setup()
-    title = "${ctrl.projectName} \u2013 ${l10n("ui.${type.name.lowercase()}.title")} \u2013 Cinecred"
+    title = "${ctrl.projectName} \u2013 ${l10n("ui.${type.name.lowercase()}.title")} \u2013 CredGen"
 
     addWindowListener(object : WindowAdapter() {
         override fun windowClosing(e: WindowEvent) {

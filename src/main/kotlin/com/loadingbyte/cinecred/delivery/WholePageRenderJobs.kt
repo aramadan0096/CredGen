@@ -135,7 +135,7 @@ class WholePageSequenceRenderJob private constructor(
                         // Note: We have verified that the XML writer used a bit further down writes system-dependent
                         // line breaks, so we do too.
                         writer.newLine()
-                        writer.write("<!-- Created with Cinecred $VERSION -->")
+                        writer.write("<!-- Created with CredGen $VERSION -->")
                         // The XML writer sadly doesn't put a newline after a comment placed before the root element.
                         // The simplest solution is to just write this comment ourselves.
                         writer.newLine()
@@ -238,7 +238,7 @@ class WholePagePDFRenderJob private constructor(
         // We're embedding OpenType fonts, which requires PDF 1.6.
         pdfDoc.version = 1.6f
         pdfDoc.documentInformation.apply {
-            creator = "Cinecred $VERSION"
+            creator = "CredGen $VERSION"
             creationDate = Calendar.getInstance()
         }
         pdfDoc.documentCatalog.language = global.locale.toLanguageTag()
