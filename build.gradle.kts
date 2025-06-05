@@ -1,5 +1,5 @@
-import com.loadingbyte.cinecred.*
-import com.loadingbyte.cinecred.Platform
+import com.loadingbyte.credgen.*
+import com.loadingbyte.credgen.Platform
 import org.apache.tools.ant.filters.ReplaceTokens
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -36,9 +36,9 @@ val splashScreen = javaProperties.getProperty("splashScreen")!!
 val javaOptions = javaProperties.getProperty("javaOptions")!!
 
 val locales = listOf("cs", "de", "en", "es", "fr", "zh-CN").map(Locale::forLanguageTag)
-val url = "https://cinecred.com"
+val url = "https://credgen.com"
 val vendor = "Felix Mujkanovic"
-val email = "felix@cinecred.com"
+val email = "felix@credgen.com"
 val copyright = "Copyright \u00A9 ${Year.now().value} $vendor, licensed under the GPLv3 or any later version"
 val linuxCategories = listOf("AudioVideo", "Video")
 
@@ -181,7 +181,7 @@ tasks.processResources {
     from("CHANGELOG.md")
     into("licenses") {
         from("LICENSE")
-        rename("LICENSE", "Cinecred-LICENSE")
+        rename("LICENSE", "credgen-LICENSE")
     }
     // Collect all licenses (and related files) from the dependencies.
     // Rename these files such that each one carries the name of the JAR it originated from.
@@ -244,7 +244,7 @@ for (platform in Platform.values()) {
         description = "Runs the demo on ${platform.label.capitalized()}."
         dependsOn(platformNatives)
         classpath(sourceSets.named("demo").map { it.runtimeClasspath })
-        mainClass = "com.loadingbyte.cinecred.DemoMain"
+        mainClass = "com.loadingbyte.credgen.DemoMain"
         jvmArgs = jvmArgs_ + listOf("--add-opens", "java.desktop/javax.swing=ALL-UNNAMED")
     }
 }
@@ -270,7 +270,7 @@ val writeAppStreamFile by tasks.registering(WriteAppStreamFile::class) {
     vendor = this@Build_gradle.vendor
     email = this@Build_gradle.email
     categories = linuxCategories
-    outputFile = layout.buildDirectory.file("generated/appStreamFile/cinecred.metainfo.xml")
+    outputFile = layout.buildDirectory.file("generated/appStreamFile/credgen.metainfo.xml")
 }
 
 val preparePlatformPackagingTasks = Platform.values().map { platform ->
@@ -457,7 +457,7 @@ for (platform in Platform.values()) {
 tasks.register<Jextract>("jextractSkiaCAPI") {
     group = "Native"
     description = "Extracts Java bindings for the Skia CAPI native library."
-    targetPackage = "com.loadingbyte.cinecred.natives.skiacapi"
+    targetPackage = "com.loadingbyte.credgen.natives.skiacapi"
     headerFile = srcSkiacapiCpp.file("skiacapi.h")
     outputDir = srcMainJava
 }
@@ -465,7 +465,7 @@ tasks.register<Jextract>("jextractSkiaCAPI") {
 tasks.register<Jextract>("jextractSkcms") {
     group = "Native"
     description = "Extracts Java bindings for skcms, which is part of the Skia native library."
-    targetPackage = "com.loadingbyte.cinecred.natives.skcms"
+    targetPackage = "com.loadingbyte.credgen.natives.skcms"
     headerFile = checkoutSkia.flatMap { it.repositoryDir.file("modules/skcms/skcms.h") }
     outputDir = srcMainJava
 }
@@ -473,7 +473,7 @@ tasks.register<Jextract>("jextractSkcms") {
 tasks.register<Jextract>("jextractHarfBuzz") {
     group = "Native"
     description = "Extracts Java bindings for the HarfBuzz native library."
-    targetPackage = "com.loadingbyte.cinecred.natives.harfbuzz"
+    targetPackage = "com.loadingbyte.credgen.natives.harfbuzz"
     addHarfBuzzIncludes()
     includeDir = checkoutHarfBuzz.flatMap { it.repositoryDir.dir("src") }
     headerFile = includeDir.map { it.file("hb.h") }
@@ -483,7 +483,7 @@ tasks.register<Jextract>("jextractHarfBuzz") {
 tasks.register<Jextract>("jextractZimg") {
     group = "Native"
     description = "Extracts Java bindings for the zimg native library."
-    targetPackage = "com.loadingbyte.cinecred.natives.zimg"
+    targetPackage = "com.loadingbyte.credgen.natives.zimg"
     headerFile = checkoutZimg.flatMap { it.repositoryDir.file("src/zimg/api/zimg.h") }
     outputDir = srcMainJava
 }
@@ -491,7 +491,7 @@ tasks.register<Jextract>("jextractZimg") {
 tasks.register<Jextract>("jextractNFD") {
     group = "Native"
     description = "Extracts Java bindings for the NFD native library."
-    targetPackage = "com.loadingbyte.cinecred.natives.nfd"
+    targetPackage = "com.loadingbyte.credgen.natives.nfd"
     headerFile = checkoutNFD.flatMap { it.repositoryDir.file("src/include/nfd.h") }
     outputDir = srcMainJava
 }
@@ -499,7 +499,7 @@ tasks.register<Jextract>("jextractNFD") {
 tasks.register<Jextract>("jextractDeckLinkCAPI") {
     group = "Native"
     description = "Extracts Java bindings for the DeckLink CAPI native library."
-    targetPackage = "com.loadingbyte.cinecred.natives.decklinkcapi"
+    targetPackage = "com.loadingbyte.credgen.natives.decklinkcapi"
     headerFile = srcDecklinkcapiCpp.file("decklinkcapi.h")
     outputDir = srcMainJava
 }

@@ -3,7 +3,7 @@ CredGen
 
 Create beautiful film credits without the pain.
 
-Visit https://cinecred.com for further information about the nature of this
+Visit https://credgen.com for further information about the nature of this
 software, as well as manifold download options.
 
 CredGen is licensed under the GNU General Public License Version 3, or any
@@ -13,10 +13,10 @@ For information on how to compile, run, and maintain this software, refer to the
 [maintenance](MAINTENANCE.md) file.
 
 You are welcome to
-[contribute translations](https://hosted.weblate.org/engage/cinecred/) on
+[contribute translations](https://hosted.weblate.org/engage/credgen/) on
 Weblate! Here's how things currently stand:
 
-![Translation status](https://hosted.weblate.org/widgets/cinecred/-/multi-auto.svg)
+![Translation status](https://hosted.weblate.org/widgets/credgen/-/multi-auto.svg)
 
 
 ## How to Build CredGen

@@ -2,7 +2,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <?define UpgradeCode = "d3f4499f-c56c-4f7d-b051-1f8eade3fc9c" ?>
 
-  <Product Id="*" Name="Cinecred" Version="@VERSION@" Language="!(loc.LanguageCode)" Manufacturer="@VENDOR@" UpgradeCode="$(var.UpgradeCode)">
+  <Product Id="*" Name="credgen" Version="@VERSION@" Language="!(loc.LanguageCode)" Manufacturer="@VENDOR@" UpgradeCode="$(var.UpgradeCode)">
     <Package Platform="@ARCH_WIX@" Description="!(loc.Slogan)" Languages="!(loc.LanguageCode)" Manufacturer="@VENDOR@" InstallerVersion="200" Compressed="yes" InstallScope="perMachine"/>
     <MediaTemplate EmbedCab="yes"/>
 
@@ -38,8 +38,8 @@
     <Property Id="ARPHELPLINK" Value="@URL@"/>
     <Property Id="ARPURLINFOABOUT" Value="@URL@"/>
     <Property Id="ARPURLUPDATEINFO" Value="@URL@"/>
-    <Icon Id="CinecredIcon" SourceFile="images\icon.ico"/>
-    <Property Id="ARPPRODUCTICON" Value="CinecredIcon"/>
+    <Icon Id="credgenIcon" SourceFile="images\icon.ico"/>
+    <Property Id="ARPPRODUCTICON" Value="credgenIcon"/>
     <SetProperty Id="ARPINSTALLLOCATION" Value="[INSTALLDIR]" After="CostFinalize"/>
 
     <!-- UI -->

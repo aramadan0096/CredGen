@@ -1,4 +1,4 @@
-Cinecred Changelog
+credgen Changelog
 ==================
 
 
@@ -273,7 +273,7 @@ Cinecred Changelog
   correctly marked as having the top field coded first.
 - Rendering a video with a non-ASCII filename no longer crashes on Windows.
 - The video preview now renders in the background without blocking the UI.
-- Improved stability by letting Cinecred use up to 75% of the installed memory.
+- Improved stability by letting credgen use up to 75% of the installed memory.
 - Unused memory is now released earlier, reducing off-peak memory consumption.
 - Most I/O errors are now caught and gracefully handled.
 - Crash reports now include more context and ask users to state what they did.
@@ -308,7 +308,7 @@ Cinecred Changelog
 ### Fixes
 
 - Problems while scanning file trees, e.g., loops, are now gracefully ignored.
-- Crash reports now include the version of Cinecred as well as OS information.
+- Crash reports now include the version of credgen as well as OS information.
 
 ### UI Fixes
 
@@ -448,7 +448,7 @@ Cinecred Changelog
   for various popup dialogs.
 - Introduced separate UI path for project creation.
 - Added a changelog viewer to the welcome window.
-- Added a Cinecred and dependency license viewer to the welcome window.
+- Added a credgen and dependency license viewer to the welcome window.
 - Enabled opening project folders by dragging them onto the app launcher.
 - On macOS, the preferences can now be opened via the corresponding menu entry.
 - On macOS, the window title bar now shows the project folder and utilizes the
@@ -619,7 +619,7 @@ Cinecred Changelog
   starts a new block in the specified row with the new alignment from that block
   onwards.
 - Removed support for logical fonts like "SansSerif". Using them in a design
-  program like Cinecred does not make any sense as they are highly
+  program like credgen does not make any sense as they are highly
   system-dependent.
 
 
@@ -691,4 +691,4 @@ Cinecred Changelog
 
 ### Additions
 
-- Initial release of Cinecred.
+- Initial release of credgen.

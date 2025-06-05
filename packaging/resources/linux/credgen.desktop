@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=CredGen
+@LINUX_SHORTCUT_COMMENTS@
+Exec=credgen %f
+Icon=credgen
+Terminal=false
+Type=Application
+Categories=@LINUX_SHORTCUT_CATEGORIES@

@@ -7,7 +7,7 @@
         <Component Id="DesktopShortcutComponent" Guid="*">
           <Condition>DESKTOP_SHORTCUT</Condition>
           <RegistryValue Root="HKMU" Key="Software\CredGen" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes"/>
-          <Shortcut Id="DesktopShortcut" Name="CredGen" Description="!(loc.Slogan)" WorkingDirectory="INSTALLDIR" Target="[INSTALLDIR]cinecred.exe"/>
+          <Shortcut Id="DesktopShortcut" Name="CredGen" Description="!(loc.Slogan)" WorkingDirectory="INSTALLDIR" Target="[INSTALLDIR]credgen.exe"/>
         </Component>
       </Directory>
 
@@ -16,7 +16,7 @@
         <Component Id="StartMenuShortcutComponent" Guid="*">
           <Condition>STARTMENU_SHORTCUT</Condition>
           <RegistryValue Root="HKMU" Key="Software\CredGen" Name="StartMenuShortcut" Type="integer" Value="1" KeyPath="yes"/>
-          <Shortcut Id="StartMenuShortcut" Name="CredGen" Description="!(loc.Slogan)" WorkingDirectory="INSTALLDIR" Target="[INSTALLDIR]cinecred.exe"/>
+          <Shortcut Id="StartMenuShortcut" Name="CredGen" Description="!(loc.Slogan)" WorkingDirectory="INSTALLDIR" Target="[INSTALLDIR]credgen.exe"/>
         </Component>
       </Directory>
     </DirectoryRef>

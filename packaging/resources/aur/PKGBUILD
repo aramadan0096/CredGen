@@ -1,27 +1,27 @@
 # Maintainer: @VENDOR@ <@EMAIL@>
-pkgname=cinecred
+pkgname=credgen
 pkgver=@VERSION@
 pkgrel=1
 pkgdesc="@SLOGAN_EN@"
 arch=('@ARCH@')
 url="@URL@"
 license=('GPL3')
-source=("https://cinecred.com/dl/$pkgver/cinecred-$pkgver-linux-x86_64.tar.gz")
+source=("https://credgen.com/dl/$pkgver/credgen-$pkgver-linux-x86_64.tar.gz")
 sha256sums=('{{SHA_256_HASH}}')
 
 package() {
 	mkdir -p "$pkgdir/opt/"
-	cp -r "$srcdir/cinecred/" "$pkgdir/opt/cinecred/"
+	cp -r "$srcdir/credgen/" "$pkgdir/opt/credgen/"
 
 	mkdir -p "$pkgdir/usr/share/applications/"
-	mv "$pkgdir/opt/cinecred/cinecred.desktop" "$_"
+	mv "$pkgdir/opt/credgen/credgen.desktop" "$_"
 	mkdir -p "$pkgdir/usr/share/metainfo/"
-	mv "$pkgdir/opt/cinecred/cinecred.metainfo.xml" "$_"
+	mv "$pkgdir/opt/credgen/credgen.metainfo.xml" "$_"
 	mkdir -p "$pkgdir/usr/share/icons/hicolor/scalable/apps/"
-	mv "$pkgdir/opt/cinecred/cinecred.svg" "$_"
+	mv "$pkgdir/opt/credgen/credgen.svg" "$_"
 	mkdir -p "$pkgdir/usr/share/icons/hicolor/256x256/apps/"
-	mv "$pkgdir/opt/cinecred/cinecred.png" "$_"
+	mv "$pkgdir/opt/credgen/credgen.png" "$_"
 
 	mkdir -p "$pkgdir/usr/bin/"
-	ln -s /opt/cinecred/bin/cinecred "$_"
+	ln -s /opt/credgen/bin/credgen "$_"
 }

@@ -31,9 +31,9 @@ to the various distribution channels.
    `package.sh` script for these.
     * On Linux, you need the following tools to build DEB and RPM
       packages: `dpkg-deb`, `rpmbuild`, `rpmsign`
-    * To sign the RPM, you need the private `cinecred.com` PGP key and the
+    * To sign the RPM, you need the private `credgen.com` PGP key and the
       following two lines in your `~/.rpmmacros`
-      file: `%_signature gpg`, `%_gpg_name cinecred.com`
+      file: `%_signature gpg`, `%_gpg_name credgen.com`
 3. Upload the resulting packaged files from the `out/` folders to the website.
    There are 2 files for Windows, 2 files for macOS x86, 2 files for macOS ARM,
    and 4 files for Linux.

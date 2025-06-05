@@ -150,13 +150,13 @@ heightPx = <50>
 name = "{project.template.transitionStyleLinear}"
 
 [[pictureStyle]]
-name = "Cinecred H"
-picture = "Cinecred H.svg"
+name = "credgen H"
+picture = "credgen H.svg"
 heightPx = <90>
 cropBlankSpace = true
 
 [[pictureStyle]]
-name = "Cinecred V"
-picture = "Cinecred V.svg"
+name = "credgen V"
+picture = "credgen V.svg"
 heightPx = <150>
 cropBlankSpace = true

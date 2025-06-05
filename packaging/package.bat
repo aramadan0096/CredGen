@@ -23,11 +23,11 @@ echo Collecting minimized JRE...
 %jdk_bin%\jlink @settings\jlink --output work\runtime\
 
 echo Collecting installation image...
-%jdk_bin%\jpackage @settings\jpackage @settings\jpackage-windows --name cinecred --icon images\icon.ico --input app\ --runtime-image work\runtime\ --dest work\image\
-copy resources\universal\LEGAL work\image\cinecred\
+%jdk_bin%\jpackage @settings\jpackage @settings\jpackage-windows --name credgen --icon images\icon.ico --input app\ --runtime-image work\runtime\ --dest work\image\
+copy resources\universal\LEGAL work\image\credgen\
 
 echo Assembling ZIP archive...
-powershell Compress-Archive work\image\Cinecred -DestinationPath out\cinecred-@VERSION@-@OS@-@ARCH@.zip
+powershell Compress-Archive work\image\credgen -DestinationPath out\credgen-@VERSION@-@OS@-@ARCH@.zip
 
 echo Assembling MSI package...
 REM Collect all languages for which we have .wxl files in three variables (en-US always comes first):
@@ -43,13 +43,13 @@ FOR %%F IN (resources\msi\l10n\*) DO (
     )
 )
 REM Generate a .wxs file that lists all installed files
-work\wix\heat.exe dir work\image\cinecred\ -nologo -ag -cg Files -dr INSTALLDIR -srd -sfrag -scom -sreg -indent 2 -o work\Files.wxs
+work\wix\heat.exe dir work\image\credgen\ -nologo -ag -cg Files -dr INSTALLDIR -srd -sfrag -scom -sreg -indent 2 -o work\Files.wxs
 REM Compile all .wxs files to .wxo files
 work\wix\candle.exe resources\msi\*.wxs work\Files.wxs -nologo -arch @ARCH_WIX@ -o work\wixobj\
 REM Assemble a separate .msi for each language
 FOR %%T IN (%lang_tags%) DO (
     IF "%%T" == "en-US" (set extra_arg=) else (set extra_arg=-reusecab)
-    work\wix\light.exe work\wixobj\* -nologo -b work\image\cinecred -loc resources\msi\l10n\%%T.wxl -cultures:%%T -ext WixUIExtension -cc work\wixcab\ -spdb -o work\wixmsi\%%T.msi %extra_arg%
+    work\wix\light.exe work\wixobj\* -nologo -b work\image\credgen -loc resources\msi\l10n\%%T.wxl -cultures:%%T -ext WixUIExtension -cc work\wixcab\ -spdb -o work\wixmsi\%%T.msi %extra_arg%
 )
 REM Obtain .mst transformations from the en-US .msi to each other language's .msi
 FOR %%T IN (%lang_tags%) DO (
@@ -62,7 +62,7 @@ FOR %%P IN (%lang_tags_and_codes%) DO (FOR /F "tokens=1,2 delims=/" %%T IN ("%%P
 ))
 REM Write all available language codes into the .msi
 resources\msi\scripts\SetPackageLanguage.vbs work\out.msi %lang_codes%
-move work\out.msi out\cinecred-@VERSION@-@ARCH@.msi
+move work\out.msi out\credgen-@VERSION@-@ARCH@.msi
 
 echo Cleaning up...
 rmdir /S /Q work\

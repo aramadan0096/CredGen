@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <installer-gui-script minSpecVersion="1">
-  <title>Cinecred</title>
+  <title>credgen</title>
   <options customize="never" require-scripts="false" hostArchitectures="@ARCH@"/>
-  <pkg-ref id="Cinecred" version="@VERSION@">Cinecred.pkg</pkg-ref>
-  <choice id="Cinecred" visible="false">
-    <pkg-ref id="Cinecred"/>
+  <pkg-ref id="credgen" version="@VERSION@">credgen.pkg</pkg-ref>
+  <choice id="credgen" visible="false">
+    <pkg-ref id="credgen"/>
   </choice>
   <choices-outline>
-    <line choice="Cinecred"/>
+    <line choice="credgen"/>
   </choices-outline>
   <background file="background-light.png" mime-type="image/png" alignment="bottomleft" scaling="none"/>
   <background-darkAqua file="background-dark.png" mime-type="image/png" alignment="bottomleft" scaling="none"/>

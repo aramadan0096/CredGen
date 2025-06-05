@@ -1,1 +1,1 @@
-rootProject.name = "cinecred"
+rootProject.name = "credgen"
