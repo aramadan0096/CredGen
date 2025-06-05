@@ -22,6 +22,7 @@ Weblate! Here's how things currently stand:
 ## How to Build CredGen
 ### Prerequisites
 - JDK 21 : Required for building and running CredGen. Gradle's toolchain enforces this, but you must install JDK 21 manually (automatic download is disabled).
+- Adding `JAVA_HOME` variable to the system environment
 - Gradle : Use the included gradlew / gradlew.bat scripts for consistent builds.
 - Platform-specific tools for native libraries:
   - Windows : Visual Studio Build Tools (MSVC and Clang, both selected in the installer)
@@ -31,14 +32,25 @@ Weblate! Here's how things currently stand:
   - Linux packaging : dpkg-deb , rpmbuild , rpmsign (for DEB/RPM)
 
 ### Building and Running
+```
 .\gradlew runOnWindows
+```
+or
+```
 .\gradlew runOnMacX86
+```
+or
+```
 .\gradlew runOnMacARM
+```
+or
+```
 .\gradlew runOnLinux
+```
 
 ### Packaging for Release
 1. Prepare Packaging
-   - Run: gradlew clean preparePackaging
+   - Run: `.\gradlew clean preparePackaging`
    - This creates three folders in build/packaging/ , one for each OS.
 2. Platform-specific Packaging
    - Windows : Copy the Windows folder to a Windows machine and run package.bat to build the installer.
