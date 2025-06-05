@@ -2,6 +2,10 @@
 
 package com.loadingbyte.cinecred
 
+import java.awt.Color
+import javax.swing.SwingUtilities
+import javax.swing.UIManager
+import javax.swing.UnsupportedLookAndFeelException
 import com.formdev.flatlaf.FlatClientProperties.STYLE_CLASS
 import com.formdev.flatlaf.FlatDarkLaf
 import com.formdev.flatlaf.FlatIconColors
@@ -170,6 +174,139 @@ private fun mainSwing(args: Array<String>) {
     fixTextFieldVerticalCentering()
     // Fix the inability to get a dock progress bar to appear on macOS.
     fixTaskbarProgressBarOnMacOS()
+
+    // Setting main colors for FlatLaf.
+    // FlatLaf.setGlobalProperty(FlatClientProperties.DEFAULT_BACKGROUND_COLOR, Color.decode("#2d2319"))
+    // FlatLaf.setGlobalProperty(FlatClientProperties.DEFAULT_FOREGROUND_COLOR, Color.decode("#ffb347"))
+    // FlatLaf.setGlobalProperty(FlatClientProperties.DEFAULT_BORDER_COLOR, Color.decode("#555555"))
+    val accent = Color.decode("#ff3c00")
+    val darkBg  = Color.decode("#2B2B2B")
+    val midGray = Color.decode("#555555")
+    val lightBg = Color.decode("#EEEEEE")
+
+    // Global / Panels / Labels
+    UIManager.put("Panel.background",       darkBg)
+    UIManager.put("Panel.foreground",       Color.WHITE)
+    UIManager.put("Label.foreground",       Color.decode("#DDDDDD"))
+    
+    // Buttons & Toggle Buttons
+    UIManager.put("Button.background",      accent.darker())
+    UIManager.put("Button.foreground",      Color.WHITE)
+    UIManager.put("ToggleButton.background",darkBg)
+    UIManager.put("ToggleButton.foreground",Color.WHITE)
+    UIManager.put("RadioButton.background",  darkBg)
+    UIManager.put("RadioButton.foreground",  Color.WHITE)
+    UIManager.put("CheckBox.background",     darkBg)
+    UIManager.put("CheckBox.foreground",     Color.WHITE)
+    
+    // Text & Text Components
+    UIManager.put("TextField.background",    midGray)
+    UIManager.put("TextField.foreground",    Color.WHITE)
+    UIManager.put("TextField.caretForeground", accent)
+    UIManager.put("TextField.selectionBackground", accent)
+    UIManager.put("TextField.selectionForeground", Color.WHITE)
+
+    UIManager.put("TextArea.background",     midGray)
+    UIManager.put("TextArea.foreground",     Color.WHITE)
+    UIManager.put("TextArea.selectionBackground", accent)
+    UIManager.put("TextArea.selectionForeground", Color.WHITE)
+
+    UIManager.put("PasswordField.background",midGray)
+    UIManager.put("PasswordField.foreground",Color.WHITE)
+    
+    UIManager.put("FormattedTextField.background", midGray)
+    UIManager.put("FormattedTextField.foreground", Color.WHITE)
+    
+    // Lists, Tables, Trees
+    UIManager.put("List.background",         darkBg)
+    UIManager.put("List.foreground",         Color.WHITE)
+    UIManager.put("List.selectionBackground",accent)
+    UIManager.put("List.selectionForeground",Color.BLACK)
+
+    UIManager.put("Table.background",        darkBg)
+    UIManager.put("Table.foreground",        Color.WHITE)
+    UIManager.put("Table.selectionBackground",accent)
+    UIManager.put("Table.selectionForeground",Color.BLACK)
+    UIManager.put("Table.gridColor",         midGray)
+
+    UIManager.put("Tree.selectionBackground",accent)
+    UIManager.put("Tree.selectionForeground",Color.BLACK)
+    UIManager.put("Tree.textBackground",     darkBg)
+    UIManager.put("Tree.textForeground",     Color.WHITE)
+
+    // ComboBox
+    UIManager.put("ComboBox.background",     midGray)
+    UIManager.put("ComboBox.foreground",     Color.WHITE)
+    UIManager.put("ComboBox.selectionBackground", accent)
+    UIManager.put("ComboBox.selectionForeground", Color.BLACK)
+
+    // Scroll Bars & Scroll Panes
+    UIManager.put("ScrollBar.thumb",         accent)
+    UIManager.put("ScrollBar.track",         darkBg)
+    UIManager.put("ScrollBar.thumbHighlight",accent.brighter())
+    UIManager.put("ScrollBar.thumbDarkShadow",accent.darker())
+    UIManager.put("ScrollPane.background",   darkBg)
+    UIManager.put("Viewport.background",     darkBg)
+
+    // TabbedPane
+    UIManager.put("TabbedPane.selectedBackground",  accent)
+    UIManager.put("TabbedPane.selectedForeground",  Color.WHITE)
+    UIManager.put("TabbedPane.background",          darkBg)
+    UIManager.put("TabbedPane.foreground",          Color.WHITE)
+    UIManager.put("TabbedPane.highlight",           accent.brighter())
+    UIManager.put("TabbedPane.shadow",              accent.darker())
+
+    // Menu & MenuItems
+    UIManager.put("MenuBar.background",      midGray)
+    UIManager.put("MenuBar.foreground",      Color.WHITE)
+    UIManager.put("Menu.background",         darkBg)
+    UIManager.put("Menu.foreground",         Color.WHITE)
+    UIManager.put("Menu.selectionBackground",accent.darker())
+    UIManager.put("Menu.selectionForeground",Color.WHITE)
+    UIManager.put("MenuItem.background",     darkBg)
+    UIManager.put("MenuItem.foreground",     Color.WHITE)
+    UIManager.put("MenuItem.selectionBackground",accent.darker())
+    UIManager.put("MenuItem.selectionForeground",Color.WHITE)
+
+    UIManager.put("PopupMenu.background",    darkBg)
+    UIManager.put("PopupMenu.foreground",    Color.WHITE)
+
+    // ToolBar
+    UIManager.put("ToolBar.background",      darkBg)
+    UIManager.put("ToolBar.foreground",      Color.WHITE)
+    UIManager.put("ToolBar.borderColor",     midGray)
+
+    // Slider & ProgressBar
+    UIManager.put("Slider.background",       darkBg)
+    UIManager.put("Slider.foreground",       accent)
+    UIManager.put("Slider.track",            midGray)
+    UIManager.put("Slider.thumb",            accent)
+    UIManager.put("Slider.focus",            accent.brighter())
+
+    UIManager.put("ProgressBar.background",  midGray)
+    UIManager.put("ProgressBar.foreground",  accent)
+    UIManager.put("ProgressBar.selectionBackground", Color.BLACK)
+    UIManager.put("ProgressBar.selectionForeground", Color.WHITE)
+
+    // SplitPane & InternalFrame
+    UIManager.put("SplitPane.background",    darkBg)
+    UIManager.put("SplitPaneDivider.draggedColor", accent.brighter())
+    UIManager.put("InternalFrame.background",darkBg)
+    UIManager.put("InternalFrame.foreground",Color.WHITE)
+    UIManager.put("InternalFrame.activeTitleBackground", accent.darker())
+    UIManager.put("InternalFrame.inactiveTitleBackground", midGray)
+    UIManager.put("InternalFrame.activeTitleForeground", Color.WHITE)
+    UIManager.put("InternalFrame.inactiveTitleForeground", Color.LIGHT_GRAY)
+
+    // Miscellaneous
+    UIManager.put("TitledBorder.titleColor", Color.WHITE)
+    UIManager.put("ToolTip.background",      lightBg)
+    UIManager.put("ToolTip.foreground",      Color.BLACK)
+    UIManager.put("OptionPane.background",   darkBg)
+    UIManager.put("OptionPane.foreground",   Color.WHITE)
+    UIManager.put("OptionPane.messageForeground", Color.WHITE)
+    UIManager.put("OptionPane.buttonAreaBackground", midGray)
+
 
     // Run the demo code if configured, and then abort the regular startup.
     demoCallback?.let { it(); return }

@@ -125,8 +125,8 @@ class WelcomePanel(welcomeCtrl: WelcomeCtrlComms) : JPanel() {
             putClientProperty(TABBED_PANE_LEADING_COMPONENT, brandPanel)
             addTab(l10n("ui.welcome.projects"), FOLDER_ICON, projectsPanel)
             addTab(l10n("ui.welcome.preferences"), PREFERENCES_ICON, preferencesPanel)
-            addTab(l10n("ui.welcome.changelog"), GIFT_ICON, changelogPanel)
-            addTab(l10n("ui.welcome.about"), INFO_ICON.getRecoloredIcon(PALETTE_GRAY_COLOR), aboutPanel)
+//            addTab(l10n("ui.welcome.changelog"), GIFT_ICON, changelogPanel)
+//            addTab(l10n("ui.welcome.about"), INFO_ICON.getRecoloredIcon(PALETTE_GRAY_COLOR), aboutPanel)
         }
         layout = BorderLayout()
         add(tabPane, BorderLayout.CENTER)
