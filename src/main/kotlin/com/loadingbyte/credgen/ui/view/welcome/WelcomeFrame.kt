@@ -72,7 +72,7 @@ class WelcomeFrame(private val welcomeCtrl: WelcomeCtrlComms) : JFrame(l10n("ui.
         }
 
     override fun playHintTrack() {
-        makeWelcomeHintTrack(this).play(onPass = welcomeCtrl::onPassHintTrack)
+        makeWelcomeHintTrack(this).play(onPass = {})
     }
 
     override fun getTab() = panel.getTab()
@@ -97,14 +97,10 @@ class WelcomeFrame(private val welcomeCtrl: WelcomeCtrlComms) : JFrame(l10n("ui.
         panel.preferencesPanel.preferences_setCard(card)
     override fun preferences_start_setInitialSetup(initialSetup: Boolean, doneListener: (() -> Unit)?) =
         panel.preferencesPanel.preferences_start_setInitialSetup(initialSetup, doneListener)
-    override fun preferences_start_setUILocaleWish(wish: LocaleWish) =
-        panel.preferencesPanel.startPreferencesForm.preferences_start_setUILocaleWish(wish)
-    override fun preferences_start_setCheckForUpdates(check: Boolean) =
-        panel.preferencesPanel.startPreferencesForm.preferences_start_setCheckForUpdates(check)
-    override fun preferences_start_setWelcomeHintTrackPending(pending: Boolean) =
-        panel.preferencesPanel.startPreferencesForm.preferences_start_setWelcomeHintTrackPending(pending)
-    override fun preferences_start_setProjectHintTrackPending(pending: Boolean) =
-        panel.preferencesPanel.startPreferencesForm.preferences_start_setProjectHintTrackPending(pending)
+    // override fun preferences_start_setUILocaleWish(wish: LocaleWish) =
+    //     panel.preferencesPanel.startPreferencesForm.preferences_start_setUILocaleWish(wish)
+    // override fun preferences_start_setCheckForUpdates(check: Boolean) =
+    //     panel.preferencesPanel.startPreferencesForm.preferences_start_setCheckForUpdates(check)
     override fun preferences_start_setAccounts(accounts: List<Account>) =
         panel.preferencesPanel.preferences_start_setAccounts(accounts)
     override fun preferences_start_setAccountRemovalLocked(account: Account, locked: Boolean) =

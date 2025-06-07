@@ -12,40 +12,40 @@ import java.util.*
 class PreferencesForm(private val welcomeCtrl: WelcomeCtrlComms) :
     EasyForm(insets = false, noticeArea = false, constLabelWidth = false) {
 
-    private val uiLocaleWishWidget = addWidget(
-        l10n("ui.preferences.uiLocaleWish"),
-        ComboBoxWidget(
-            LocaleWish::class.java,
-            listOf(LocaleWish.System) + TRANSLATED_LOCALES
-                .sortedWithCollator(ROOT_CASE_INSENSITIVE_COLLATOR) { it.getDisplayName(it) }
-                .map(LocaleWish::Specific),
-            toString = { wish ->
-                when (wish) {
-                    is LocaleWish.System -> l10n("ui.preferences.uiLocaleWishSystem")
-                    is LocaleWish.Specific ->
-                        if (Locale.getDefault() != wish.locale)
-                            "${wish.locale.getDisplayName(wish.locale)} \u2013 ${wish.locale.displayName}"
-                        else
-                            wish.locale.displayName
-                }
-            })
-    )
+    // private val uiLocaleWishWidget = addWidget(
+    //     l10n("ui.preferences.uiLocaleWish"),
+    //     ComboBoxWidget(
+    //         LocaleWish::class.java,
+    //         listOf(LocaleWish.System) + TRANSLATED_LOCALES
+    //             .sortedWithCollator(ROOT_CASE_INSENSITIVE_COLLATOR) { it.getDisplayName(it) }
+    //             .map(LocaleWish::Specific),
+    //         toString = { wish ->
+    //             when (wish) {
+    //                 is LocaleWish.System -> l10n("ui.preferences.uiLocaleWishSystem")
+    //                 is LocaleWish.Specific ->
+    //                     if (Locale.getDefault() != wish.locale)
+    //                         "${wish.locale.getDisplayName(wish.locale)} \u2013 ${wish.locale.displayName}"
+    //                     else
+    //                         wish.locale.displayName
+    //             }
+    //         })
+    // )
 
-    private val checkForUpdatesWidget = addWidget(
-        l10n("ui.preferences.checkForUpdates"),
-        CheckBoxWidget(),
-        description = l10n("ui.preferences.checkForUpdates.desc", l10nQuoted("credgen.com"))
-    )
+    // private val checkForUpdatesWidget = addWidget(
+    //     l10n("ui.preferences.checkForUpdates"),
+    //     CheckBoxWidget(),
+    //     description = l10n("ui.preferences.checkForUpdates.desc", l10nQuoted("credgen.com"))
+    // )
 
-    private val welcomeHintTrckPendingWidget = addWidget(
-        l10n("ui.preferences.hintTrackPending.welcome"),
-        CheckBoxWidget()
-    )
+    // private val welcomeHintTrckPendingWidget = addWidget(
+    //     l10n("ui.preferences.hintTrackPending.welcome"),
+    //     CheckBoxWidget()
+    // )
 
-    private val projectHintTrckPendingWidget = addWidget(
-        l10n("ui.preferences.hintTrackPending.project"),
-        CheckBoxWidget()
-    )
+    // private val projectHintTrckPendingWidget = addWidget(
+    //     l10n("ui.preferences.hintTrackPending.project"),
+    //     CheckBoxWidget()
+    // )
 
     private var disableOnChange = false
 
@@ -66,14 +66,14 @@ class PreferencesForm(private val welcomeCtrl: WelcomeCtrlComms) :
         if (disableOnChange)
             return
         when (widget) {
-            uiLocaleWishWidget ->
-                forward(UI_LOCALE_PREFERENCE, uiLocaleWishWidget.value)
-            checkForUpdatesWidget ->
-                forward(CHECK_FOR_UPDATES_PREFERENCE, checkForUpdatesWidget.value)
-            welcomeHintTrckPendingWidget ->
-                forward(WELCOME_HINT_TRACK_PENDING_PREFERENCE, welcomeHintTrckPendingWidget.value)
-            projectHintTrckPendingWidget ->
-                forward(PROJECT_HINT_TRACK_PENDING_PREFERENCE, projectHintTrckPendingWidget.value)
+            // uiLocaleWishWidget ->
+            //     forward(UI_LOCALE_PREFERENCE, uiLocaleWishWidget.value)
+            // checkForUpdatesWidget ->
+            //     forward(CHECK_FOR_UPDATES_PREFERENCE, checkForUpdatesWidget.value)
+            // welcomeHintTrckPendingWidget ->
+            //     forward(WELCOME_HINT_TRACK_PENDING_PREFERENCE, welcomeHintTrckPendingWidget.value)
+            // projectHintTrckPendingWidget ->
+            //     forward(PROJECT_HINT_TRACK_PENDING_PREFERENCE, projectHintTrckPendingWidget.value)
             else -> throw IllegalStateException("Unknown widget, should never happen.")
         }
         super.onChange(widget)
@@ -90,9 +90,9 @@ class PreferencesForm(private val welcomeCtrl: WelcomeCtrlComms) :
        ********** COMMS **********
        *************************** */
 
-    fun preferences_start_setUILocaleWish(wish: LocaleWish) = load(uiLocaleWishWidget, wish)
-    fun preferences_start_setCheckForUpdates(check: Boolean) = load(checkForUpdatesWidget, check)
-    fun preferences_start_setWelcomeHintTrackPending(pending: Boolean) = load(welcomeHintTrckPendingWidget, pending)
-    fun preferences_start_setProjectHintTrackPending(pending: Boolean) = load(projectHintTrckPendingWidget, pending)
+    // fun preferences_start_setUILocaleWish(wish: LocaleWish) = load(uiLocaleWishWidget, wish)
+    // fun preferences_start_setCheckForUpdates(check: Boolean) = load(checkForUpdatesWidget, check)
+    // fun preferences_start_setWelcomeHintTrackPending(pending: Boolean) = load(welcomeHintTrckPendingWidget, pending)
+    // fun preferences_start_setProjectHintTrackPending(pending: Boolean) = load(projectHintTrckPendingWidget, pending)
 
 }

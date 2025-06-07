@@ -38,27 +38,27 @@ class WelcomeCtrl(private val masterCtrl: MasterCtrlComms) : WelcomeCtrlComms {
 
     private lateinit var welcomeView: WelcomeViewComms
 
-    private val uiLocaleListener = { wish: LocaleWish ->
-        welcomeView.preferences_start_setUILocaleWish(wish)
-        SwingUtilities.invokeLater {
-            if (welcomeView.showRestartUILocaleQuestion(newLocale = wish.locale)) {
-                masterCtrl.tryCloseProjectsAndDisposeAllFrames()
-                masterCtrl.showWelcomeFrame(tab = WelcomeTab.PREFERENCES)
-            }
-        }
-    }
-    private val checkForUpdatesListener = { check: Boolean ->
-        welcomeView.preferences_start_setCheckForUpdates(check)
-        tryCheckForUpdates()
-    }
-    private val welcomeHintTrackPendingListener = { pending: Boolean ->
-        welcomeView.preferences_start_setWelcomeHintTrackPending(pending)
-        if (pending)
-            welcomeView.playHintTrack()
-    }
-    private val projectHintTrackPendingListener = { pending: Boolean ->
-        welcomeView.preferences_start_setProjectHintTrackPending(pending)
-    }
+    // private val uiLocaleListener = { wish: LocaleWish ->
+    //     welcomeView.preferences_start_setUILocaleWish(wish)
+    //     SwingUtilities.invokeLater {
+    //         if (welcomeView.showRestartUILocaleQuestion(newLocale = wish.locale)) {
+    //             masterCtrl.tryCloseProjectsAndDisposeAllFrames()
+    //             masterCtrl.showWelcomeFrame(tab = WelcomeTab.PREFERENCES)
+    //         }
+    //     }
+    // }
+    // private val checkForUpdatesListener = { check: Boolean ->
+    //     welcomeView.preferences_start_setCheckForUpdates(check)
+    //     tryCheckForUpdates()
+    // }
+    // private val welcomeHintTrackPendingListener = { pending: Boolean ->
+    //     welcomeView.preferences_start_setWelcomeHintTrackPending(pending)
+    //     if (pending)
+    //         welcomeView.playHintTrack()
+    // }
+    // private val projectHintTrackPendingListener = { pending: Boolean ->
+    //     welcomeView.preferences_start_setProjectHintTrackPending(pending)
+    // }
     private val accountListListener = {
         SwingUtilities.invokeLater {
             val accounts = SERVICES.flatMap(Service::accounts)
@@ -106,10 +106,7 @@ class WelcomeCtrl(private val masterCtrl: MasterCtrlComms) : WelcomeCtrlComms {
         DELIVERY_DEST_TEMPLATES_PREFERENCE.addListener(deliveryDestTemplatesListener)
 
         // Retrieve the current preferences, accounts, overlays, and delivery location templates.
-        welcomeView.preferences_start_setUILocaleWish(UI_LOCALE_PREFERENCE.get())
-        welcomeView.preferences_start_setCheckForUpdates(CHECK_FOR_UPDATES_PREFERENCE.get())
-        welcomeView.preferences_start_setWelcomeHintTrackPending(WELCOME_HINT_TRACK_PENDING_PREFERENCE.get())
-        welcomeView.preferences_start_setProjectHintTrackPending(PROJECT_HINT_TRACK_PENDING_PREFERENCE.get())
+        // welcomeView.preferences_start_setUILocaleWish(UI_LOCALE_PREFERENCE.get())
         accountListListener()
         overlaysListener(OVERLAYS_PREFERENCE.get())
         deliveryDestTemplatesListener(DELIVERY_DEST_TEMPLATES_PREFERENCE.get())
@@ -211,42 +208,6 @@ class WelcomeCtrl(private val masterCtrl: MasterCtrlComms) : WelcomeCtrlComms {
         }
     }
 
-    /**
-     * If configured accordingly, checks for updates (in the background if there's no cached information yet) and shows
-     * an update tab if an update is available.
-     */
-    private fun tryCheckForUpdates() {
-        fun afterFetch() {
-            val version = latestStableVersion.get()
-            if (version != null && version != VERSION)
-                welcomeView.setUpdate(version)
-        }
-
-        if (latestStableVersion.get() != null)
-            afterFetch()
-        else if (CHECK_FOR_UPDATES_PREFERENCE.get()) {
-            val client = HttpClient.newBuilder().followRedirects(HttpClient.Redirect.ALWAYS).build()
-            val req = HttpRequest.newBuilder(URI.create("https://credgen.com/dl/api/v1/components"))
-                .setHeader("User-Agent", "CredGen/$VERSION").build()
-            client.sendAsync(req, HttpResponse.BodyHandlers.ofString()).thenAccept { resp ->
-                if (resp.statusCode() != 200)
-                    return@thenAccept
-
-                // Note: If the following processing fails for some reason, the thrown exception is just swallowed by
-                // the CompletableFuture context. Since we do not need to react to a failed update check, this is fine.
-                @Suppress("UNCHECKED_CAST")
-                val root = Json.parse(StringReader(resp.body())) as Map<String, List<Map<String, String>>>
-                val version = root
-                    .getValue("components")
-                    .first { it["qualifier"].equals("Release", ignoreCase = true) }
-                    .getValue("version")
-                latestStableVersion.compareAndSet(null, version)
-                SwingUtilities.invokeLater(::afterFetch)
-            }
-        }
-    }
-
-
     /* ***************************
        ********** COMMS **********
        *************************** */
@@ -275,43 +236,20 @@ class WelcomeCtrl(private val masterCtrl: MasterCtrlComms) : WelcomeCtrlComms {
     // Be aware that this method might be called multiple times on the same object!
     // For example, it happens if a user opens the welcome window multiple times.
     override fun commence(openProjectDir: Path?) {
-        fun finishInit(initConfigChangedUILocaleWish: Boolean) {
-            // If the program was started for the first time and the user changed the locale during the initial
-            // configuration, create a new welcome window so that the change applies. If you look at the code, you see
-            // that the new window will take over at this exact point.
-            if (initConfigChangedUILocaleWish) {
-                masterCtrl.tryCloseProjectsAndDisposeAllFrames()
-                masterCtrl.showWelcomeFrame(openProjectDir, tab = WelcomeTab.PREFERENCES)
-                return
-            }
-            // If the user dragged a folder onto the program, try opening that. If opening closed the window, stop here.
+        fun finishInit() {
             if (openProjectDir != null && tryOpenOrCreateProject(openProjectDir))
                 return
-            // Otherwise, show the welcome window or, if it is already visible, bring it to the front.
             welcomeView.display()
-            // If the welcome window was previously open, stop now. Otherwise, complete its regular initialization.
             if (alreadyRanOpenActions)
                 return
             alreadyRanOpenActions = true
-            // Register the preference listeners.
-            UI_LOCALE_PREFERENCE.addListener(uiLocaleListener)
-            CHECK_FOR_UPDATES_PREFERENCE.addListener(checkForUpdatesListener)
-            WELCOME_HINT_TRACK_PENDING_PREFERENCE.addListener(welcomeHintTrackPendingListener)
-            PROJECT_HINT_TRACK_PENDING_PREFERENCE.addListener(projectHintTrackPendingListener)
-            // If enabled, check for updates and run the welcome hint track.
-            tryCheckForUpdates()
-            if (WELCOME_HINT_TRACK_PENDING_PREFERENCE.get())
-                welcomeView.playHintTrack()
+            // No more UI_LOCALE_PREFERENCE.addListener(uiLocaleListener)
         }
 
         if (SET_UP_PREFERENCE.get())
-            finishInit(false)
+            finishInit()
         else if (!alreadyStartedInitialConfiguration) {
             alreadyStartedInitialConfiguration = true
-            // If we are here, the program is started for the first time as no preferences have been saved previously.
-            // Lock all other tabs and let the user initially configure all preferences. This lets him specify whether
-            // he wants update checks and hints before the program actually contacts the server or starts a hint track.
-            // Also, it lets him directly set his preferred locale in case that differs from the system locale.
             welcomeView.setTab(WelcomeTab.PREFERENCES)
             welcomeView.setTabsLocked(true)
             withheldPrefChanges = HashMap()
@@ -322,21 +260,17 @@ class WelcomeCtrl(private val masterCtrl: MasterCtrlComms) : WelcomeCtrlComms {
                 withheldPrefChanges = null
                 welcomeView.setTabsLocked(false)
                 welcomeView.preferences_start_setInitialSetup(false, null)
-                finishInit(initConfigChangedUILocaleWish = UI_LOCALE_PREFERENCE.get() != defaultUILocaleWish)
+                finishInit()
             }
             welcomeView.display()
         }
     }
 
     override fun close() {
-        UI_LOCALE_PREFERENCE.removeListener(uiLocaleListener)
-        CHECK_FOR_UPDATES_PREFERENCE.removeListener(checkForUpdatesListener)
-        WELCOME_HINT_TRACK_PENDING_PREFERENCE.removeListener(welcomeHintTrackPendingListener)
-        PROJECT_HINT_TRACK_PENDING_PREFERENCE.removeListener(projectHintTrackPendingListener)
+        // No more UI_LOCALE_PREFERENCE.removeListener(uiLocaleListener)
         removeAccountListListener(accountListListener)
         OVERLAYS_PREFERENCE.removeListener(overlaysListener)
         DELIVERY_DEST_TEMPLATES_PREFERENCE.removeListener(deliveryDestTemplatesListener)
-
         createProjectThread.getAndSet(null)?.interrupt()
         addAccountThread.getAndSet(null)?.interrupt()
         welcomeView.close()
@@ -355,10 +289,6 @@ class WelcomeCtrl(private val masterCtrl: MasterCtrlComms) : WelcomeCtrlComms {
     override fun showDeliveryDestTemplateCreation() {
         setTab(WelcomeTab.PREFERENCES)
         preferences_start_onClickAddDeliveryDestTemplate()
-    }
-
-    override fun onPassHintTrack() {
-        WELCOME_HINT_TRACK_PENDING_PREFERENCE.set(false)
     }
 
     override fun projects_start_onClickOpen() {

@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "com.loadingbyte"
-version = "1.8.0"
+version = "0.1.0"
 
 val jdkVersion = 21
 val slf4jVersion = "2.0.17"

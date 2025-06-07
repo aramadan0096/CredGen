@@ -9,7 +9,6 @@ import com.loadingbyte.credgen.projectio.service.Account
 import com.loadingbyte.credgen.projectio.service.Service
 import com.loadingbyte.credgen.ui.ConfigurableOverlay
 import com.loadingbyte.credgen.ui.DeliveryDestTemplate
-import com.loadingbyte.credgen.ui.LocaleWish
 import com.loadingbyte.credgen.ui.Preference
 import com.loadingbyte.credgen.ui.helper.FileExtAssortment
 import java.awt.GraphicsConfiguration
@@ -31,8 +30,6 @@ interface WelcomeCtrlComms {
     fun showDeliveryDestTemplateCreation()
 
     // ========== FOR WELCOME VIEW ==========
-
-    fun onPassHintTrack()
 
     fun projects_start_onClickOpen()
     fun projects_start_onCompleteOpenDialog(projectDir: Path?)
@@ -123,10 +120,7 @@ interface WelcomeViewComms {
     fun preferences_setCard(card: PreferencesCard)
 
     fun preferences_start_setInitialSetup(initialSetup: Boolean, doneListener: (() -> Unit)?)
-    fun preferences_start_setUILocaleWish(wish: LocaleWish)
-    fun preferences_start_setCheckForUpdates(check: Boolean)
-    fun preferences_start_setWelcomeHintTrackPending(pending: Boolean)
-    fun preferences_start_setProjectHintTrackPending(pending: Boolean)
+    // fun preferences_start_setUILocaleWish(wish: LocaleWish)
     fun preferences_start_setAccounts(accounts: List<Account>)
     fun preferences_start_setAccountRemovalLocked(account: Account, locked: Boolean)
     fun preferences_start_setOverlays(overlays: List<ConfigurableOverlay>)
