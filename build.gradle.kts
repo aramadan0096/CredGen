@@ -38,8 +38,8 @@ val javaOptions = javaProperties.getProperty("javaOptions")!!
 val locales = listOf("cs", "de", "en", "es", "fr", "zh-CN").map(Locale::forLanguageTag)
 val url = "https://credgen.com"
 val vendor = "Felix Mujkanovic"
-val email = "felix@credgen.com"
-val copyright = "Copyright \u00A9 ${Year.now().value} $vendor, licensed under the GPLv3 or any later version"
+val email = "ahmed.ramadan@aromastudios.com"
+val copyright = "All rights reserved Pipeline Developers Team 2025.\n"
 val linuxCategories = listOf("AudioVideo", "Video")
 
 
