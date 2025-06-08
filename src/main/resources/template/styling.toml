@@ -102,17 +102,17 @@ tailGapPx = <32>
 
 [[letterStyle]]
 name = "{project.template.letterStyleNormal}"
-fontName = "Archivo Narrow Regular"
+fontName = "Arial Regular"
 heightPx = <32>
 
 [[letterStyle]]
 name = "{project.template.letterStyleSmall}"
-fontName = "Archivo Narrow Regular"
+fontName = "Arial Regular"
 heightPx = <24>
 
 [[letterStyle]]
 name = "{project.template.contentStyleHeading}"
-fontName = "Archivo Narrow Regular"
+fontName = "Arial Regular"
 heightPx = <32>
 trackingEm = 0.05
 
@@ -127,23 +127,23 @@ stripePreset = "UNDERLINE"
 
 [[letterStyle]]
 name = "{project.template.letterStyleName}"
-fontName = "Archivo Narrow Bold"
+fontName = "Arial Bold"
 heightPx = <32>
 
 [[letterStyle]]
 name = "{project.template.letterStyleSongTitle}"
-fontName = "Archivo Narrow Bold"
+fontName = "Arial Bold"
 heightPx = <32>
 smallCaps = "SMALL_CAPS"
 
 [[letterStyle]]
 name = "{project.template.letterStyleCardName}"
-fontName = "Archivo Narrow Bold"
+fontName = "Arial Bold"
 heightPx = <100>
 
 [[letterStyle]]
 name = "{project.template.letterStyleCardSmall}"
-fontName = "Archivo Narrow Regular"
+fontName = "Arial Regular"
 heightPx = <50>
 
 [[transitionStyle]]
