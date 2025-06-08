@@ -16,8 +16,6 @@ You are welcome to
 [contribute translations](https://hosted.weblate.org/engage/credgen/) on
 Weblate! Here's how things currently stand:
 
-![Translation status](https://hosted.weblate.org/widgets/credgen/-/multi-auto.svg)
-
 
 ## How to Build CredGen
 ### Prerequisites

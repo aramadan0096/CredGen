@@ -36,8 +36,8 @@ val splashScreen = javaProperties.getProperty("splashScreen")!!
 val javaOptions = javaProperties.getProperty("javaOptions")!!
 
 val locales = listOf("cs", "de", "en", "es", "fr", "zh-CN").map(Locale::forLanguageTag)
-val url = "https://credgen.com"
-val vendor = "Felix Mujkanovic"
+val url = "https://aromastudios.com"
+val vendor = "Ahmed Ramadan, Pipeline TD"
 val email = "ahmed.ramadan@aromastudios.com"
 val copyright = "All rights reserved Pipeline Developers Team 2025.\n"
 val linuxCategories = listOf("AudioVideo", "Video")
