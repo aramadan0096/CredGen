@@ -39,7 +39,7 @@ val locales = listOf("cs", "de", "en", "es", "fr", "zh-CN").map(Locale::forLangu
 val url = "https://aromastudios.com"
 val vendor = "Ahmed Ramadan, Pipeline TD"
 val email = "ahmed.ramadan@aromastudios.com"
-val copyright = "All rights reserved Pipeline Developers Team 2025.\n"
+val copyright = "All rights reserved Pipeline Developers Team 2025."
 val linuxCategories = listOf("AudioVideo", "Video")
 
 
