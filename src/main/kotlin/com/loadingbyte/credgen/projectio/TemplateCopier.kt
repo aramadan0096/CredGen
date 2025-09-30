@@ -56,6 +56,9 @@ private fun tryCopyTemplate(
     if (template.sample) {
         tryCopyLogoFile(destDir, "credgenH.svg", "credgen H.svg")
         tryCopyLogoFile(destDir, "credgenV.svg", "credgen V.svg")
+        tryCopyLogoFile(destDir, "25Frames0201.png", "25 Frames-02-01.png")
+        tryCopyLogoFile(destDir, "AromaLogo.png", "Aroma Logo.png")
+        tryCopyLogoFile(destDir, "TheEndrollMachine.png", "The Endroll Machine.png")
     }
 }
 
@@ -109,7 +112,12 @@ private fun tryCopyCreditsTemplate(
 private fun tryCopyStylingTemplate(destDir: Path, template: Template) {
     val file = destDir.resolve(STYLING_FILE_NAME)
     if (file.notExists()) {
-        var lines = useResourceStream("/template/styling.toml") { it.bufferedReader().readLines() }
+        // NOTE: Resource path is case-sensitive inside JARs. Original code used "/template/styling.toml" which
+        // fails after packaging (NullPointerException) because the actual file is "Styling.toml".
+        val primaryPath = "/template/Styling.toml"
+        val fallbackPath = "/template/styling.toml" // keep backward compatibility if resource ever renamed.
+        val resourcePath = if (Template::class.java.getResource(primaryPath) != null) primaryPath else fallbackPath
+        var lines = useResourceStream(resourcePath) { it.bufferedReader().readLines() }
         // If desired, cut off the template where the first sample style declaration starts.
         if (!template.sample)
             lines = lines.subList(0, lines.indexOfFirst { "[[" in it })

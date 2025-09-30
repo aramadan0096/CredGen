@@ -1,162 +1,489 @@
+version = "0.1.0"
+
 [global]
-resolution = "{resolution}"
-fps = "{fps}"
-timecodeFormat = "{timecodeFormat}"
+resolution = "2048x858"
+fps = "24"
+timecodeFormat = "SMPTE_NON_DROP_FRAME"
+blankFirstFrame = false
 blankLastFrame = true
-unitVGapPx = <32>
-locale = "{locale}"
+grounding = [0.0, 0.0, 0.0, 1.0, ]
+unitVGapPx = 32.0
+locale = "en"
+uppercaseExceptions = ["_af_", "_auf_", "_d’#", "_da_", "_Da#", "_dai_", "_Dai#", "_dal_", "_Dal#", "_dalla_", "_Dalla#", "_das_", "_de_", "_de’_", "_dei_", "_Dei#", "_del_", "_Del#", "_della_", "_Della#", "_der_", "_des_", "_di_", "_Di#", "_do_", "_dos_", "_du_", "_e_", "_Mc#", "_Mac#", "_of_", "_ten_", "_thoe_", "_til_", "_to_", "_tot_", "_van_", "_von_", "_von und zu_", "_zu_", ]
 
 [[pageStyle]]
-name = "{project.PageBehavior.CARD}"
-subsequentGapFrames = {subsequentGapFrames}
+name = "Card"
+subsequentGapFrames = 24
 behavior = "CARD"
-cardRuntimeFrames = {cardRuntimeFrames}
-cardFadeInFrames = {cardFadeFrames}
-cardFadeInTransitionStyleName = "{project.template.transitionStyleLinear}"
-cardFadeOutFrames = {cardFadeFrames}
-cardFadeOutTransitionStyleName = "{project.template.transitionStyleLinear}"
+cardRuntimeFrames = 120
+cardFadeInFrames = 12
+cardFadeInTransitionStyleName = "Linear"
+cardFadeOutFrames = 12
+cardFadeOutTransitionStyleName = "Linear"
 
 [[pageStyle]]
-name = "{project.PageBehavior.SCROLL}"
-subsequentGapFrames = {subsequentGapFrames}
+name = "Scroll"
+subsequentGapFrames = 24
 behavior = "SCROLL"
-scrollPxPerFrame = {scrollPxPerFrame}
+scrollPxPerFrame = 3.0
 
 [[contentStyle]]
-name = "{project.template.contentStyleHeading}"
-bodyLetterStyleName = "{project.template.contentStyleHeading}"
+name = "Blurb"
+spineAttachment = "BODY_CENTER"
+vMarginTopPx = 0.0
+vMarginBottomPx = 0.0
+bodyLetterStyleName = "Normal"
+bodyLayout = "PARAGRAPHS"
+paragraphsLineHJustify = "CENTER"
+paragraphsLineWidthPx = 500.0
+paragraphsParaGapPx = 8.0
+paragraphsLineGapPx = 0.0
+hasHead = false
+hasTail = false
+
+[[contentStyle]]
+name = "Bullets"
+blockOrientation = "VERTICAL"
+spineAttachment = "BODY_CENTER"
+vMarginTopPx = 0.0
+vMarginBottomPx = 0.0
+bodyLetterStyleName = "R_Name_Style"
+bodyLayout = "FLOW"
+sort = "OFF"
+flowDirection = "L2R"
+flowLineHJustify = "CENTER"
+flowSquareCells = false
+flowHarmonizeCellWidth = "OFF"
+flowHarmonizeCellHeight = "OFF"
+flowCellVJustify = "MIDDLE"
+flowLineWidthPx = 800.0
+flowLineGapPx = 0.0
+flowHGapPx = 32.0
+flowSeparator = "•"
+flowSeparatorVJustify = "MIDDLE"
+hasHead = true
+headLetterStyleName = "Small"
+headHJustify = "CENTER"
+headGapPx = 4.0
+hasTail = false
+
+[[contentStyle]]
+name = "C_Titel_Name"
+blockOrientation = "VERTICAL"
+spineAttachment = "BODY_CENTER"
+vMarginTopPx = 0.0
+vMarginBottomPx = 0.0
+bodyLetterStyleName = "C_Name_Style"
 bodyLayout = "GRID"
+sort = "OFF"
+gridCols = 1
+gridStructure = "FREE"
+gridHarmonizeColWidths = "OFF"
+gridHarmonizeRowHeight = "OFF"
+gridCellHJustifyPerCol = ["CENTER", ]
+gridRowGapPx = 0.0
+hasHead = true
+headLetterStyleName = "C_Titel_Style"
+headHJustify = "CENTER"
+headGapPx = 32.0
+hasTail = true
+tailLetterStyleName = "C_Titel_Style"
+tailHJustify = "CENTER"
+tailGapPx = 32.0
 
 [[contentStyle]]
-name = "{project.template.contentStyleSubheading}"
-bodyLetterStyleName = "{project.template.letterStyleSmall}"
+name = "C_Titel_Only"
+spineAttachment = "BODY_CENTER"
+vMarginTopPx = 0.0
+vMarginBottomPx = 0.0
+bodyLetterStyleName = "C_Titel_Only_Style"
 bodyLayout = "GRID"
+sort = "OFF"
+gridCols = 1
+gridStructure = "FREE"
+gridHarmonizeColWidths = "OFF"
+gridHarmonizeRowHeight = "OFF"
+gridCellHJustifyPerCol = ["CENTER", ]
+gridRowGapPx = 0.0
+hasHead = false
+hasTail = false
 
 [[contentStyle]]
-name = "{project.template.contentStyleGutter}"
+name = "Gutter"
 blockOrientation = "HORIZONTAL"
 spineAttachment = "HEAD_GAP_CENTER"
-bodyLetterStyleName = "{project.template.letterStyleName}"
+vMarginTopPx = 0.0
+vMarginBottomPx = 0.0
+bodyLetterStyleName = "R_Name_Style"
 bodyLayout = "GRID"
+sort = "OFF"
+gridCols = 1
+gridStructure = "FREE"
 gridHarmonizeColWidths = "ACROSS_BLOCKS"
-gridCellHJustifyPerCol = ["LEFT"]
+gridHarmonizeRowHeight = "OFF"
+gridCellHJustifyPerCol = ["LEFT", ]
+gridRowGapPx = 0.0
 hasHead = true
-headLetterStyleName = "{project.template.letterStyleSmall}"
+headLetterStyleName = "R_Titel_Style"
 headHarmonizeWidth = "ACROSS_BLOCKS"
 headHJustify = "RIGHT"
-headVJustify = "TOP"
-headGapPx = <24>
+headVShelve = "FIRST"
+headVJustify = "MIDDLE"
+headGapPx = 24.0
+headLeader = ""
+hasTail = false
 
 [[contentStyle]]
-name = "{project.template.contentStyleBullets}"
-bodyLetterStyleName = "{project.template.letterStyleName}"
-bodyLayout = "FLOW"
-flowLineWidthPx = <800>
-flowHGapPx = <32>
-hasHead = true
-headLetterStyleName = "{project.template.letterStyleSmall}"
-headGapPx = <4>
-
-[[contentStyle]]
-name = "{project.template.contentStyleTabular}"
-bodyLetterStyleName = "{project.template.letterStyleName}"
-bodyLayout = "GRID"
-gridStructure = "EQUAL_WIDTH_COLS"
-gridCellHJustifyPerCol = ["LEFT", "CENTER", "RIGHT"]
-gridColGapPx = <32>
-
-[[contentStyle]]
-name = "{project.template.contentStyleSong}"
-bodyLetterStyleName = "{project.template.letterStyleSmall}"
-bodyLayout = "GRID"
-hasHead = true
-headLetterStyleName = "{project.template.letterStyleSongTitle}"
-headGapPx = 0.0
-
-[[contentStyle]]
-name = "{project.template.contentStyleLogos}"
-bodyLetterStyleName = "{project.template.letterStyleNormal}"
-bodyLayout = "FLOW"
-flowLineWidthPx = <1200>
-flowLineGapPx = <64>
-flowHGapPx = <96>
-flowSeparator = ""
-
-[[contentStyle]]
-name = "{project.template.contentStyleBlurb}"
-bodyLetterStyleName = "{project.template.letterStyleNormal}"
+name = "Logos"
+spineAttachment = "BODY_CENTER"
+vMarginTopPx = 0.0
+vMarginBottomPx = 0.0
+bodyLetterStyleName = "Normal"
 bodyLayout = "PARAGRAPHS"
-paragraphsLineWidthPx = <500>
-paragraphsParaGapPx = <8>
+paragraphsLineHJustify = "CENTER"
+paragraphsLineWidthPx = 600.0
+paragraphsParaGapPx = 8.0
+paragraphsLineGapPx = 0.0
+hasHead = false
+hasTail = false
 
 [[contentStyle]]
-name = "{project.PageBehavior.CARD}"
-bodyLetterStyleName = "{project.template.letterStyleCardName}"
+name = "R_Name"
+spineAttachment = "BODY_CENTER"
+vMarginTopPx = 0.0
+vMarginBottomPx = 0.0
+bodyLetterStyleName = "R_Name_Style"
 bodyLayout = "GRID"
+sort = "OFF"
+gridCols = 1
+gridStructure = "FREE"
+gridHarmonizeColWidths = "OFF"
+gridHarmonizeRowHeight = "OFF"
+gridCellHJustifyPerCol = ["CENTER", ]
+gridRowGapPx = 0.0
+hasHead = false
+hasTail = false
+
+[[contentStyle]]
+name = "R_Name_Row"
+spineAttachment = "BODY_CENTER"
+vMarginTopPx = 0.0
+vMarginBottomPx = 0.0
+bodyLetterStyleName = "R_Name_Style"
+bodyLayout = "GRID"
+sort = "OFF"
+gridCols = 2
+gridFillingOrder = "L2R_T2B"
+gridFillingBalanced = true
+gridStructure = "EQUAL_WIDTH_COLS"
+gridHarmonizeColWidths = "OFF"
+gridHarmonizeRowHeight = "OFF"
+gridCellHJustifyPerCol = ["LEFT", "CENTER", ]
+gridCellVJustify = "MIDDLE"
+gridRowGapPx = 0.0
+gridColGapPx = 32.0
+hasHead = false
+hasTail = false
+
+[[contentStyle]]
+name = "R_Titel"
+spineAttachment = "BODY_CENTER"
+vMarginTopPx = 0.0
+vMarginBottomPx = 3.0
+bodyLetterStyleName = "R_Titel_Style"
+bodyLayout = "GRID"
+sort = "OFF"
+gridCols = 1
+gridStructure = "FREE"
+gridHarmonizeColWidths = "OFF"
+gridHarmonizeRowHeight = "OFF"
+gridCellHJustifyPerCol = ["CENTER", ]
+gridRowGapPx = 0.0
+hasHead = false
+hasTail = false
+
+[[contentStyle]]
+name = "Song"
+blockOrientation = "VERTICAL"
+spineAttachment = "BODY_CENTER"
+vMarginTopPx = 0.0
+vMarginBottomPx = 0.0
+bodyLetterStyleName = "Small"
+bodyLayout = "GRID"
+sort = "OFF"
+gridCols = 1
+gridStructure = "FREE"
+gridHarmonizeColWidths = "OFF"
+gridHarmonizeRowHeight = "OFF"
+gridCellHJustifyPerCol = ["CENTER", ]
+gridRowGapPx = 0.0
 hasHead = true
-headLetterStyleName = "{project.template.letterStyleCardSmall}"
-headGapPx = <32>
-hasTail = true
-tailLetterStyleName = "{project.template.letterStyleCardSmall}"
-tailGapPx = <32>
+headLetterStyleName = "Song Title"
+headHJustify = "CENTER"
+headGapPx = 0.0
+hasTail = false
 
 [[letterStyle]]
-name = "{project.template.letterStyleNormal}"
-fontName = "Arial Regular"
-heightPx = <32>
+name = "C_Name_Style"
+font = "DIN Next LT Arabic Medium"
+heightPx = 70.0
+leadingTopRh = 0.0
+leadingBottomRh = 0.0
+trackingEm = 0.0
+kerning = true
+uppercase = false
+smallCaps = "OFF"
+superscript = "OFF"
+hScaling = 1.0
+
+	[[letterStyle.layers]]
+	name = "Text"
+	coloring = "PLAIN"
+	color1 = [0.9642792, 0.9999695, 0.8250885, 1.0, ]
+	shape = "TEXT"
+	dilationRfh = 0.0
+	contour = false
+	offsetCoordinateSystem = "CARTESIAN"
+	hOffsetRfh = 0.0
+	vOffsetRfh = 0.0
+	hScaling = 1.0
+	vScaling = 1.0
+	hShearing = 0.0
+	vShearing = 0.0
+	blurRadiusRfh = 0.0
 
 [[letterStyle]]
-name = "{project.template.letterStyleSmall}"
-fontName = "Arial Regular"
-heightPx = <24>
+name = "C_Titel_Only_Style"
+font = "DIN Next LT Arabic Light"
+heightPx = 50.0
+leadingTopRh = 0.0
+leadingBottomRh = 0.0
+trackingEm = 0.0
+kerning = true
+uppercase = false
+smallCaps = "OFF"
+superscript = "OFF"
+hScaling = 1.0
+
+	[[letterStyle.layers]]
+	name = "Text"
+	coloring = "PLAIN"
+	color1 = [0.9642792, 0.9999695, 0.8250885, 1.0, ]
+	shape = "TEXT"
+	dilationRfh = 0.0
+	contour = false
+	offsetCoordinateSystem = "CARTESIAN"
+	hOffsetRfh = 0.0
+	vOffsetRfh = 0.0
+	hScaling = 1.0
+	vScaling = 1.0
+	hShearing = 0.0
+	vShearing = 0.0
+	blurRadiusRfh = 0.0
 
 [[letterStyle]]
-name = "{project.template.contentStyleHeading}"
-fontName = "Arial Regular"
-heightPx = <32>
-trackingEm = 0.05
+name = "C_Titel_Style"
+font = "DIN Next LT Arabic Light"
+heightPx = 50.0
+leadingTopRh = 0.0
+leadingBottomRh = 0.0
+trackingEm = 0.0
+kerning = true
+uppercase = false
+smallCaps = "OFF"
+superscript = "OFF"
+hScaling = 1.0
 
-[[letterStyle.layers]]
-name = "{project.LayerShape.TEXT}"
-shape = "TEXT"
-
-[[letterStyle.layers]]
-name = "{project.StripePreset.UNDERLINE}"
-shape = "STRIPE"
-stripePreset = "UNDERLINE"
+	[[letterStyle.layers]]
+	name = "Text"
+	coloring = "PLAIN"
+	color1 = [0.9642792, 0.9999695, 0.8250885, 1.0, ]
+	shape = "TEXT"
+	dilationRfh = 0.0
+	contour = false
+	offsetCoordinateSystem = "CARTESIAN"
+	hOffsetRfh = 0.0
+	vOffsetRfh = 0.0
+	hScaling = 1.0
+	vScaling = 1.0
+	hShearing = 0.0
+	vShearing = 0.0
+	blurRadiusRfh = 0.0
 
 [[letterStyle]]
-name = "{project.template.letterStyleName}"
-fontName = "Arial Bold"
-heightPx = <32>
+name = "Normal"
+font = "Saira Condensed Regular"
+heightPx = 32.0
+leadingTopRh = 0.0
+leadingBottomRh = 0.0
+trackingEm = 0.0
+kerning = true
+ligatures = true
+uppercase = false
+smallCaps = "OFF"
+superscript = "OFF"
+hScaling = 1.0
+
+	[[letterStyle.layers]]
+	name = "Text"
+	coloring = "PLAIN"
+	color1 = [0.9642792, 0.9999695, 0.8250885, 1.0, ]
+	shape = "TEXT"
+	dilationRfh = 0.0
+	contour = false
+	offsetCoordinateSystem = "CARTESIAN"
+	hOffsetRfh = 0.0
+	vOffsetRfh = 0.0
+	hScaling = 1.0
+	vScaling = 1.0
+	hShearing = 0.0
+	vShearing = 0.0
+	blurRadiusRfh = 0.0
 
 [[letterStyle]]
-name = "{project.template.letterStyleSongTitle}"
-fontName = "Arial Bold"
-heightPx = <32>
+name = "R_Name_Style"
+font = "DIN Next LT Arabic Medium"
+heightPx = 50.0
+leadingTopRh = 0.0
+leadingBottomRh = 0.0
+trackingEm = 0.0
+kerning = true
+uppercase = false
+smallCaps = "OFF"
+superscript = "OFF"
+hScaling = 1.0
+
+	[[letterStyle.layers]]
+	name = "Text"
+	coloring = "PLAIN"
+	color1 = [0.9642792, 0.9999695, 0.8250885, 1.0, ]
+	shape = "TEXT"
+	dilationRfh = 0.0
+	contour = false
+	offsetCoordinateSystem = "CARTESIAN"
+	hOffsetRfh = 0.0
+	vOffsetRfh = 0.0
+	hScaling = 1.0
+	vScaling = 1.0
+	hShearing = 0.0
+	vShearing = 0.0
+	blurRadiusRfh = 0.0
+
+[[letterStyle]]
+name = "R_Titel_Style"
+font = "DIN Next LT Arabic Light"
+heightPx = 35.0
+leadingTopRh = 0.0
+leadingBottomRh = 0.0
+trackingEm = 0.0
+kerning = true
+uppercase = false
+smallCaps = "OFF"
+superscript = "OFF"
+hScaling = 1.0
+
+	[[letterStyle.layers]]
+	name = "Text"
+	coloring = "PLAIN"
+	color1 = [0.9642792, 0.9999695, 0.8250885, 1.0, ]
+	shape = "TEXT"
+	dilationRfh = 0.0
+	contour = false
+	offsetCoordinateSystem = "CARTESIAN"
+	hOffsetRfh = 0.0
+	vOffsetRfh = 0.0
+	hScaling = 1.0
+	vScaling = 1.0
+	hShearing = 0.0
+	vShearing = 0.0
+	blurRadiusRfh = 0.0
+
+	[[letterStyle.layers]]
+	name = "Underline"
+	coloring = "PLAIN"
+	color1 = [0.9642792, 0.9999695, 0.8250885, 1.0, ]
+	shape = "TEXT"
+	dilationRfh = 0.0
+	contour = false
+	offsetCoordinateSystem = "CARTESIAN"
+	hOffsetRfh = 0.0
+	vOffsetRfh = 0.0
+	hScaling = 1.0
+	vScaling = 1.0
+	hShearing = 0.0
+	vShearing = 0.0
+	blurRadiusRfh = 0.0
+
+[[letterStyle]]
+name = "Small"
+font = "DIN Next LT Arabic Medium"
+heightPx = 50.0
+leadingTopRh = 0.0
+leadingBottomRh = 0.0
+trackingEm = 0.0
+kerning = true
+uppercase = false
+smallCaps = "OFF"
+superscript = "OFF"
+hScaling = 1.0
+
+	[[letterStyle.layers]]
+	name = "Text"
+	coloring = "PLAIN"
+	color1 = [0.9642792, 0.9999695, 0.8250885, 1.0, ]
+	shape = "TEXT"
+	dilationRfh = 0.0
+	contour = false
+	offsetCoordinateSystem = "CARTESIAN"
+	hOffsetRfh = 0.0
+	vOffsetRfh = 0.0
+	hScaling = 1.0
+	vScaling = 1.0
+	hShearing = 0.0
+	vShearing = 0.0
+	blurRadiusRfh = 0.0
+
+[[letterStyle]]
+name = "Song Title"
+font = "Arial Bold"
+heightPx = 32.0
+leadingTopRh = 0.0
+leadingBottomRh = 0.0
+trackingEm = 0.0
+kerning = true
+ligatures = true
+uppercase = false
 smallCaps = "SMALL_CAPS"
+superscript = "OFF"
+hScaling = 1.0
 
-[[letterStyle]]
-name = "{project.template.letterStyleCardName}"
-fontName = "Arial Bold"
-heightPx = <100>
-
-[[letterStyle]]
-name = "{project.template.letterStyleCardSmall}"
-fontName = "Arial Regular"
-heightPx = <50>
+	[[letterStyle.layers]]
+	name = "Text"
+	coloring = "PLAIN"
+	color1 = [0.9642792, 0.9999695, 0.8250885, 1.0, ]
+	shape = "TEXT"
+	dilationRfh = 0.0
+	contour = false
+	offsetCoordinateSystem = "CARTESIAN"
+	hOffsetRfh = 0.0
+	vOffsetRfh = 0.0
+	hScaling = 1.0
+	vScaling = 1.0
+	hShearing = 0.0
+	vShearing = 0.0
+	blurRadiusRfh = 0.0
 
 [[transitionStyle]]
-name = "{project.template.transitionStyleLinear}"
+name = "Linear"
+graph = [0.0, 0.0, 1.0, 1.0, ]
 
 [[pictureStyle]]
-name = "credgen H"
-picture = "credgen H.svg"
-heightPx = <90>
-cropBlankSpace = true
+name = "Aroma Logo"
+picture = "Aroma Logo.png"
+widthPx = 200.0
 
 [[pictureStyle]]
-name = "credgen V"
-picture = "credgen V.svg"
-heightPx = <150>
-cropBlankSpace = true
+name = "The Endroll Machine"
+picture = "The Endroll Machine.png"
+widthPx = 300.0
+
