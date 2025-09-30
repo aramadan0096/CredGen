@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "com.loadingbyte"
-version = "0.1.0"
+version = "1.1.0"
 
 val jdkVersion = 21
 val slf4jVersion = "2.0.17"
@@ -255,7 +255,10 @@ val drawOSImagesTasks = Platform.OS.values().associateWith { os ->
     tasks.register<DrawImages>("draw${os.slug.capitalized()}Images") {
         version = project.version.toString()
         forOS = os
-        logoFile = srcMainResources.file("logo.svg")
+        // Use original colored logo for everything except the packaged Windows binary icon, which should use
+        // the alternate monochrome logo (logoBW.svg) per user request to work around channel swap issue.
+        val iconSvg = if (os == Platform.OS.WINDOWS) "logoBW.svg" else "logo.svg"
+        logoFile = srcMainResources.file(iconSvg)
         semiFontFile = srcMainResources.file("fonts/Titillium-SemiboldUpright.otf")
         boldFontFile = srcMainResources.file("fonts/Titillium-BoldUpright.otf")
         outputDir = layout.buildDirectory.dir("generated/packaging/${os.slug}")

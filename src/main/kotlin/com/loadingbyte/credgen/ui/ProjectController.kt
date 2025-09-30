@@ -558,6 +558,29 @@ class ProjectController(
             saved = current
             lastEditedId = null  // Saving should always create a new undo state.
             projectFrame.panel.onStylingSave()
+            // Best-effort: if credits come from a Google Sheet, refresh style dropdown validations.
+            try {
+                val uri = projectFrame.panel.currentCreditsURI
+                if (uri != null) {
+                    val svc = com.loadingbyte.credgen.projectio.service.GoogleService
+                    val fileId = try { // reuse internal helper via reflection is overkill; re-parse id here.
+                        val pathSegs = uri.path.split('/')
+                        if (uri.host == "docs.google.com" && pathSegs.size >= 4 && pathSegs[1] == "spreadsheets" && pathSegs[2] == "d") pathSegs[3] else null
+                    } catch (_: Exception) { null }
+                    if (fileId != null) {
+                        // Run in background so UI thread not blocked.
+                        Thread({
+                            try {
+                                svc.updateStyleDropdowns(
+                                    fileId,
+                                    current.pageStyles.map { it.name },
+                                    current.contentStyles.map { it.name }
+                                )
+                            } catch (_: Exception) { /* swallow */ }
+                        }, "GoogleStyleDropdownUpdater").apply { isDaemon = true; start() }
+                    }
+                }
+            } catch (_: Exception) { /* non-fatal */ }
         }
 
         private fun updateHistoryIndicators() {

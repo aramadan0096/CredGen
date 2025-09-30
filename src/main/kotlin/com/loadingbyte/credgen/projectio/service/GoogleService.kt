@@ -254,6 +254,61 @@ object GoogleService : Service {
     private fun makeReadRequest(sheets: Sheets, fileId: String) =
         sheets.spreadsheets().get(fileId).setFields("sheets(properties.title,data.rowData.values.formattedValue)")
 
+    /**
+     * Best-effort update of the Page Style / Content Style data validation dropdown lists of an existing
+     * Google Sheet. Invoked when the styling is saved so that renamed / added / removed styles are reflected.
+     * Runs synchronously; caller should invoke from a background thread.
+     */
+    fun updateStyleDropdowns(fileId: String, pageStyles: List<String>, contentStyles: List<String>) {
+        if (pageStyles.isEmpty() && contentStyles.isEmpty()) return
+        // Iterate over all accounts until one succeeds.
+        for (account in accounts) {
+            val sheets = (account as? GoogleAccount)?.sheets(false) ?: continue
+            try {
+                // Fetch minimal sheet data (first sheet only) to locate header and determine sheetId & dimensions.
+                val getReq = sheets.spreadsheets().get(fileId)
+                    .setFields("sheets(properties(sheetId,gridProperties(rowCount,columnCount)),data.rowData.values.formattedValue)")
+                val spreadsheet = account.send(getReq)
+                val firstSheet = spreadsheet.sheets?.firstOrNull() ?: continue
+                val sheetId = firstSheet.properties?.sheetId ?: continue
+                val rowData = firstSheet.data?.firstOrNull()?.rowData ?: emptyList()
+                if (rowData.size < 2) continue // Need at least description + @header rows.
+                val headerCells = (rowData[1].getValues() ?: emptyList()).map { it.formattedValue ?: "" }
+                val pageStyleCol = headerCells.indexOfFirst { it.contains("@") && it.contains("page", true) && it.contains("style", true) }
+                val contentStyleCol = headerCells.indexOfFirst { it.contains("@") && it.contains("content", true) && it.contains("style", true) }
+                if (pageStyleCol == -1 && contentStyleCol == -1) return
+                val requests = mutableListOf<Request>()
+                fun dvRule(values: List<String>): DataValidationRule = DataValidationRule().setCondition(
+                    BooleanCondition().setType("ONE_OF_LIST").setValues(values.map { ConditionValue().setUserEnteredValue(it) })
+                ).setStrict(true)
+                val lastRowExclusive = (firstSheet.properties?.gridProperties?.rowCount ?: 0)
+                if (pageStyleCol != -1 && pageStyles.isNotEmpty()) {
+                    requests += Request().setSetDataValidation(SetDataValidationRequest().apply {
+                        range = GridRange().setSheetId(sheetId).setStartRowIndex(2).setEndRowIndex(lastRowExclusive)
+                            .setStartColumnIndex(pageStyleCol).setEndColumnIndex(pageStyleCol + 1)
+                        rule = dvRule(pageStyles)
+                    })
+                }
+                if (contentStyleCol != -1 && contentStyles.isNotEmpty()) {
+                    requests += Request().setSetDataValidation(SetDataValidationRequest().apply {
+                        range = GridRange().setSheetId(sheetId).setStartRowIndex(2).setEndRowIndex(lastRowExclusive)
+                            .setStartColumnIndex(contentStyleCol).setEndColumnIndex(contentStyleCol + 1)
+                        rule = dvRule(contentStyles)
+                    })
+                }
+                if (requests.isEmpty()) return
+                val batchReq = sheets.spreadsheets().batchUpdate(fileId, BatchUpdateSpreadsheetRequest().setRequests(requests))
+                account.send(batchReq)
+                return // success; stop trying other accounts
+            } catch (e: Exception) {
+                // Try next account; if none succeed just log once at end.
+                LOGGER.debug("Failed to update Google Sheet dropdowns with account '{}': {}", account.id, e.toString())
+                continue
+            }
+        }
+        LOGGER.warn("Could not update Google Sheet style dropdowns for fileId={}", fileId)
+    }
+
 
     private class GoogleWatcher(
         val fileId: String,
@@ -377,9 +432,85 @@ object GoogleService : Service {
             val sSheet = Spreadsheet()
                 .setProperties(SpreadsheetProperties().setTitle(filename!!))
                 .setSheets(listOf(sheet))
-            val request = sheets.spreadsheets().create(sSheet).setFields("spreadsheetUrl")
-            // Send the request object.
-            val url = send(request).spreadsheetUrl
+            // Request more fields so we can issue a follow-up batchUpdate for data validation.
+            val request = sheets.spreadsheets().create(sSheet)
+                .setFields("spreadsheetUrl,spreadsheetId,sheets(properties(sheetId,title),data.rowData.values.formattedValue)")
+            val createResponse = send(request)
+            val url = createResponse.spreadsheetUrl
+
+            // Try to add dropdown (data validation) lists for the Page Style and Content Style columns.
+            try {
+                val sheetInfo = createResponse.sheets?.firstOrNull()
+                val sheetId = sheetInfo?.properties?.sheetId
+                if (sheetId != null && spreadsheet.numRecords > 1) {
+                    // Row 0: localized description header, Row 1: localized @header row in template creation code.
+                    // We find column indices by inspecting the second logical row (recordNo = 1) in the in-memory spreadsheet.
+                    val headerRecord = spreadsheet[1]
+                    val pageStyleCol = headerRecord.cells.indexOfFirst { it.contains("@") && it.contains("page", ignoreCase = true) && it.contains("style", ignoreCase = true) }
+                    val contentStyleCol = headerRecord.cells.indexOfFirst { it.contains("@") && it.contains("content", ignoreCase = true) && it.contains("style", ignoreCase = true) }
+                    if (pageStyleCol != -1 || contentStyleCol != -1) {
+                        // Extract style names from template Styling.toml resource (pageStyle/contentStyle blocks).
+                        val pageStyles = ArrayList<String>()
+                        val contentStyles = ArrayList<String>()
+                        useResourceStream("/template/Styling.toml") { rs ->
+                            rs.bufferedReader().forEachLine { line ->
+                                when {
+                                    line.trim().startsWith("name = ") -> {
+                                        // Only associate names after we've encountered which block type we're parsing.
+                                        // We'll track lastBlockKind in a tiny state machine.
+                                    }
+                                }
+                            }
+                        }
+                        // Simple state machine re-read (to avoid storing many lines). Implement properly:
+                        var currentBlock: String? = null
+                        useResourceStream("/template/Styling.toml") { rs ->
+                            rs.bufferedReader().forEachLine { raw ->
+                                val line = raw.trim()
+                                if (line.startsWith("[[") && line.endsWith("]]")) {
+                                    currentBlock = when {
+                                        line.contains("pageStyle") -> "page"
+                                        line.contains("contentStyle") -> "content"
+                                        else -> null
+                                    }
+                                } else if (currentBlock != null && line.startsWith("name = ")) {
+                                    val name = line.substringAfter("name = ").trim().trim('"')
+                                    when (currentBlock) {
+                                        "page" -> pageStyles += name
+                                        "content" -> contentStyles += name
+                                    }
+                                }
+                            }
+                        }
+                        fun dvRule(values: List<String>): DataValidationRule = DataValidationRule()
+                            .setCondition(BooleanCondition().setType("ONE_OF_LIST").setValues(values.map { ConditionValue().setUserEnteredValue(it) }))
+                            .setStrict(true)
+                        val requests = mutableListOf<Request>()
+                        val lastRow = rowData.size - 1
+                        if (pageStyleCol != -1 && pageStyles.isNotEmpty()) {
+                            requests += Request().setSetDataValidation(SetDataValidationRequest().apply {
+                                range = GridRange().setSheetId(sheetId).setStartRowIndex(2).setEndRowIndex(lastRow + 1)
+                                    .setStartColumnIndex(pageStyleCol).setEndColumnIndex(pageStyleCol + 1)
+                                rule = dvRule(pageStyles)
+                            })
+                        }
+                        if (contentStyleCol != -1 && contentStyles.isNotEmpty()) {
+                            requests += Request().setSetDataValidation(SetDataValidationRequest().apply {
+                                range = GridRange().setSheetId(sheetId).setStartRowIndex(2).setEndRowIndex(lastRow + 1)
+                                    .setStartColumnIndex(contentStyleCol).setEndColumnIndex(contentStyleCol + 1)
+                                rule = dvRule(contentStyles)
+                            })
+                        }
+                        if (requests.isNotEmpty()) {
+                            val batchReq = sheets.spreadsheets().batchUpdate(createResponse.spreadsheetId, BatchUpdateSpreadsheetRequest().setRequests(requests))
+                            send(batchReq) // best-effort; ignore failures silently below
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                // Non-fatal; just log and move on.
+                LOGGER.warn("Could not add data validation dropdowns to Google Sheet: {}", e.toString())
+            }
             return try {
                 URI(url)
             } catch (e: URISyntaxException) {

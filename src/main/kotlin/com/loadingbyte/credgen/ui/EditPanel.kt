@@ -222,6 +222,7 @@ class EditPanel(private val ctrl: ProjectController) : JPanel() {
     private val lowResCache = DeferredImage.CanvasMaterializationCache()
 
     private var creditsURI: URI? = null
+    val currentCreditsURI: URI? get() = creditsURI
     private var drawnProject: DrawnProject? = null
 
     private fun newToolbarButtonWithKeyListener(

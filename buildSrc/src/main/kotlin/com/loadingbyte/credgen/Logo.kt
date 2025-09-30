@@ -30,8 +30,28 @@ class Logo(file: File) {
     }
 
     fun transcode(vararg sizes: Int, margin: Double = 0.0, file: File) {
-        val imageType = if (file.extension == "ico") BufferedImage.TYPE_4BYTE_ABGR else BufferedImage.TYPE_INT_ARGB
-        val images = sizes.map { size -> rasterize(size, margin, imageType) }
+        // ICO encoder (TwelveMonkeys) only supports TYPE_4BYTE_ABGR. Windows/icon tooling previously displayed
+        // swapped red/blue (#e64223 -> #2342e6). That indicates channel interpretation mismatch. We keep the
+        // required ABGR type but pre-swap R/B so the final displayed color is correct in environments that misread it.
+        val isIco = file.extension == "ico"
+        val imageType = if (isIco) BufferedImage.TYPE_4BYTE_ABGR else BufferedImage.TYPE_INT_ARGB
+        val images = sizes.map { size ->
+            val img = rasterize(size, margin, imageType)
+            if (isIco) {
+                // Swap R and B for each pixel (excluding fully transparent) to compensate display swap.
+                for (y in 0 until img.height) for (x in 0 until img.width) {
+                    val argb = img.getRGB(x, y)
+                    val a = argb ushr 24 and 0xFF
+                    if (a == 0) continue
+                    val r = argb ushr 16 and 0xFF
+                    val g = argb ushr 8 and 0xFF
+                    val b = argb and 0xFF
+                    val swapped = (a shl 24) or (b shl 16) or (g shl 8) or r
+                    if (swapped != argb) img.setRGB(x, y, swapped)
+                }
+            }
+            img
+        }
 
         file.delete()
         file.parentFile.mkdirs()

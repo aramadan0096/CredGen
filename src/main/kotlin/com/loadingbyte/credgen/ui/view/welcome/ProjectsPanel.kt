@@ -230,13 +230,15 @@ class ProjectsPanel(private val welcomeCtrl: WelcomeCtrlComms) : JPanel() {
 
     private inner class CreateConfigureForm : EasyForm(insets = false, noticeArea = false, constLabelWidth = true) {
 
+        // Language selection hidden: default forced to English per user request.
         val localeWidget = addWidget(
             l10n("ui.styling.global.locale"),
             ComboBoxWidget(
                 Locale::class.java,
-                TRANSLATED_LOCALES.sortedWithCollator(caseInsensitiveCollator(), Locale::getDisplayName),
+                listOf(Locale.ENGLISH),
                 toString = Locale::getDisplayName
-            )
+            ),
+            isVisible = { false }
         )
 
         val resolutionWidget = addWidget(
@@ -305,7 +307,8 @@ class ProjectsPanel(private val welcomeCtrl: WelcomeCtrlComms) : JPanel() {
         )
 
         init {
-            localeWidget.value = Locale.getDefault()
+            // Force English locale (hidden from UI)
+            localeWidget.value = Locale.ENGLISH
             resolutionWidget.value = PRESET_GLOBAL.resolution
             fpsWidget.value = PRESET_GLOBAL.fps
             timecodeFormatWidget.value = PRESET_GLOBAL.timecodeFormat
